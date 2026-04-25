@@ -1,0 +1,32 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+/**
+ * Contact Page - Page simple avec image et légende fun
+ */
+
+export default function Contact() {
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
+
+      {/* Main Section */}
+      <section className="flex-1 flex items-center justify-center py-20">
+        <div className="container max-w-2xl">
+          <div className="text-center">
+            <img
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663306568498/VDWCIVgRqHzQGtFe.jpg"
+              alt="Suivez-nous sur les réseaux sociaux et contactez-nous"
+              className="w-full h-auto rounded-lg shadow-lg mb-8"
+            />
+            <p className="text-xl text-muted-foreground font-semibold italic">
+              🌟 Vous cherchez à nous joindre ? Tous les chemins mènent à Destin'Action ! 🌟
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
