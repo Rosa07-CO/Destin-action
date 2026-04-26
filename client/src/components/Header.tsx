@@ -24,17 +24,19 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-border">
       <div className="container flex items-center justify-between h-20">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">DA</span>
-          </div>
+        <a href="/" className="flex items-center gap-2">
+          <img
+            src="/logo.jpg"
+            alt="ONG Destin'Action"
+            className="w-12 h-12 object-contain rounded"
+          />
           <div className="hidden sm:block">
             <h1 className="text-lg font-bold text-primary" style={{ fontFamily: "Playfair Display" }}>
               Destin'Action
             </h1>
             <p className="text-xs text-muted-foreground">Transmettons la chance</p>
           </div>
-        </div>
+        </a>
 
         {/* Navigation Desktop */}
         <nav className="hidden md:flex items-center gap-8">
