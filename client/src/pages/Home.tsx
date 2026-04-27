@@ -400,61 +400,47 @@ export default function Home() {
             Destin'Action agit en France et au Togo pour accompagner les jeunes en difficulté.
           </p>
 
-          {/* Grille d'images */}
+          {/* Grille d'images avec lightbox */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Image 1 — Ce que nous faisons */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-ce-que-nous-faisons.jpg"
-                alt="Ce que nous faisons"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Image 2 — Nos actions en France */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-actions-france.jpg"
-                alt="Nos actions en France"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Image 3 — Citation */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-citation-enfant.jpg"
-                alt="Chaque enfant mérite un avenir meilleur"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Image 4 — ONG France & Togo */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-ong-france-togo.jpg"
-                alt="L'ONG Destin'Action en France et au Togo"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Image 5 — Rejoignez-nous */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-rejoignez-nous.jpg"
-                alt="Rejoignez Destin'Action"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Image 6 — Réseaux sociaux */}
-            <div className="rounded-xl overflow-hidden shadow-md">
-              <img
-                src="/img-reseaux-sociaux.jpg"
-                alt="Suivez-nous sur les réseaux sociaux"
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
+            {[
+              { src: "/img-ce-que-nous-faisons.jpg", alt: "Ce que nous faisons" },
+              { src: "/img-actions-france.jpg", alt: "Nos actions en France" },
+              { src: "/img-citation-enfant.jpg", alt: "Chaque enfant mérite un avenir meilleur" },
+              { src: "/img-ong-france-togo.jpg", alt: "L'ONG Destin'Action en France et au Togo" },
+              { src: "/img-rejoignez-nous.jpg", alt: "Rejoignez Destin'Action" },
+              { src: "/img-reseaux-sociaux.jpg", alt: "Suivez-nous sur les réseaux sociaux" },
+            ].map((img, i) => (
+              <div
+                key={i}
+                className="rounded-xl overflow-hidden shadow-md cursor-pointer group relative bg-secondary/5"
+                onClick={() => {
+                  const overlay = document.createElement("div");
+                  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;";
+                  const imgEl = document.createElement("img");
+                  imgEl.src = img.src;
+                  imgEl.alt = img.alt;
+                  imgEl.style.cssText = "max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;";
+                  const closeBtn = document.createElement("div");
+                  closeBtn.innerHTML = "✕";
+                  closeBtn.style.cssText = "position:absolute;top:20px;right:30px;color:white;font-size:32px;cursor:pointer;font-weight:bold;";
+                  overlay.appendChild(imgEl);
+                  overlay.appendChild(closeBtn);
+                  overlay.onclick = () => document.body.removeChild(overlay);
+                  document.body.appendChild(overlay);
+                }}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-64 object-contain bg-secondary/5 group-hover:scale-105 transition-transform duration-300 p-2"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 px-4 py-2 rounded-full text-sm font-medium">
+                    Voir en grand
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* CTA réseaux sociaux */}
