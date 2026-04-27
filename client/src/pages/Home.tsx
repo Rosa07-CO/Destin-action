@@ -186,6 +186,47 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
+              {/* Annonce Gala */}
+              <a
+                href="/evenement"
+                className="group flex items-center gap-3 mb-4 w-full rounded-2xl p-4 cursor-pointer hover:scale-105 transition-all duration-300"
+                style={{
+                  background: "linear-gradient(135deg, #000000 0%, #1a1209 100%)",
+                  border: "1px solid #E2B55C44",
+                  textDecoration: "none",
+                }}
+              >
+                {/* Icône étoile animée */}
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse"
+                  style={{ background: "rgba(226,181,92,0.2)", border: "1px solid #E2B55C" }}
+                >
+                  <span className="text-xl">🎭</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span
+                      className="text-xs font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
+                      style={{ background: "#E2B55C", color: "#000" }}
+                    >
+                      Événement passé
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold truncate" style={{ color: "#E2B55C", fontFamily: "Playfair Display" }}>
+                    Gala de Charité · 18 Avril 2026 ✨
+                  </p>
+                  <p className="text-xs" style={{ color: "#C1A47E" }}>
+                    Découvrez les photos et moments forts →
+                  </p>
+                </div>
+                <div
+                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
+                  style={{ background: "#E2B55C22", border: "1px solid #E2B55C44" }}
+                >
+                  <span style={{ color: "#E2B55C" }}>→</span>
+                </div>
+              </a>
+
               <PhotoCarousel />
             </div>
           </div>
