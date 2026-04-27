@@ -91,7 +91,7 @@ function PhotoCarousel() {
   );
 }
 
-// Composant carrousel Ambassadeurs — 3 photos visibles avec flèches
+// Composant carrousel Ambassadeurs — 3 photos visibles avec flèches + auto-rotation
 function AmbassadeurCarousel() {
   const photos = [
     "/ambassadeur-1.jpg", "/ambassadeur-2.jpg", "/ambassadeur-3.jpg",
@@ -99,24 +99,29 @@ function AmbassadeurCarousel() {
     "/ambassadeur-7.jpg", "/ambassadeur-8.jpg", "/ambassadeur-9.jpg",
     "/ambassadeur-10.jpg", "/ambassadeur-11.jpg", "/ambassadeur-12.jpg",
     "/ambassadeur-13.jpg", "/ambassadeur-14.jpg", "/ambassadeur-15.jpg",
-    "/ambassadeur-16.jpg",
+    "/ambassadeur-16.jpg", "/ambassadeur-17.jpg",
   ];
   const [start, setStart] = useState(0);
-  const visible = 3;
+
+  // Auto-rotation toutes les 2.5 secondes
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStart(s => (s + 1) % photos.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, [photos.length]);
 
   const prev = () => setStart(s => (s - 1 + photos.length) % photos.length);
   const next = () => setStart(s => (s + 1) % photos.length);
 
-  const getVisible = () => {
-    return [0, 1, 2].map(i => photos[(start + i) % photos.length]);
-  };
+  const getVisible = () => [0, 1, 2].map(i => photos[(start + i) % photos.length]);
 
   return (
     <div className="relative">
       {/* Flèche gauche */}
       <button
         onClick={prev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 text-xl font-bold"
         style={{ background: "#2D5016", color: "#D4A017" }}
       >
         ‹
@@ -133,7 +138,7 @@ function AmbassadeurCarousel() {
             <img
               src={src}
               alt={`Ambassadeur ${start + i + 1}`}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
             />
           </div>
         ))}
@@ -142,7 +147,7 @@ function AmbassadeurCarousel() {
       {/* Flèche droite */}
       <button
         onClick={next}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 text-xl font-bold"
         style={{ background: "#2D5016", color: "#D4A017" }}
       >
         ›
@@ -154,8 +159,12 @@ function AmbassadeurCarousel() {
           <button
             key={i}
             onClick={() => setStart(i)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
-            style={{ background: i === start ? "#D4A017" : "#e8dfd3" }}
+            className="rounded-full transition-all duration-300"
+            style={{
+              background: i === start ? "#D4A017" : "#e8dfd3",
+              width: i === start ? "20px" : "8px",
+              height: "8px",
+            }}
           />
         ))}
       </div>
