@@ -512,13 +512,6 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
               L'Impact de Votre Soutien
             </h2>
-            <div className="relative mb-10">
-              <img
-                src="/img-projet-togo.jpg"
-                alt="Notre projet au Togo"
-                className="w-full h-auto rounded-lg shadow-lg object-cover max-h-96 hover:scale-105 transition-transform duration-500"
-              />
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { icon: <Target className="w-8 h-8" />, title: "Contribuer à l'épanouissement", desc: "Aider les jeunes en situation de précarité à construire leur personnalité et à se projeter.", color: "primary" },
