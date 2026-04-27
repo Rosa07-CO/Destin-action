@@ -80,7 +80,124 @@ export default function Evenement() {
         </div>
       </section>
 
-      {/* Section Présentation */}
+      {/* Galerie Photos */}
+      <section className="py-20" style={{ background: "#000000" }}>
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2
+              className="text-4xl font-bold mb-4"
+              style={{ fontFamily: "Playfair Display SC", color: "#E2B55C" }}
+            >
+              Galerie Photos
+            </h2>
+            <div className="w-16 h-0.5 mx-auto" style={{ background: "#E2B55C" }} />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[
+              { src: "/gala-1.jpg", alt: "Red carpet Gala Destin'Action" },
+              { src: "/gala-2.jpg", alt: "Dîner de gala" },
+              { src: "/gala-3.jpg", alt: "Invités du Gala" },
+              { src: "/gala-4.jpg", alt: "Spectacle musical" },
+              { src: "/gala-5.jpg", alt: "Soirée Gala" },
+              { src: "/gala-6.jpg", alt: "Ambiance de la soirée" },
+              { src: "/gala-7.jpg", alt: "Invités sur le tapis rouge" },
+            ].map((img, i) => (
+              <div
+                key={i}
+                className="rounded-xl overflow-hidden cursor-pointer group relative"
+                style={{ border: "1px solid #E2B55C22", aspectRatio: "1" }}
+                onClick={() => {
+                  const overlay = document.createElement("div");
+                  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;";
+                  const imgEl = document.createElement("img");
+                  imgEl.src = img.src;
+                  imgEl.alt = img.alt;
+                  imgEl.style.cssText = "max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;border:1px solid #E2B55C44;";
+                  const closeBtn = document.createElement("div");
+                  closeBtn.innerHTML = "✕";
+                  closeBtn.style.cssText = "position:absolute;top:20px;right:30px;color:#E2B55C;font-size:32px;cursor:pointer;font-weight:bold;";
+                  overlay.appendChild(imgEl);
+                  overlay.appendChild(closeBtn);
+                  overlay.onclick = () => document.body.removeChild(overlay);
+                  document.body.appendChild(overlay);
+                }}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-2xl">
+                    🔍
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Vidéos */}
+      <section className="py-20" style={{ background: "#0d0d0d" }}>
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2
+              className="text-4xl font-bold mb-4"
+              style={{ fontFamily: "Playfair Display SC", color: "#E2B55C" }}
+            >
+              Vidéos de la Soirée
+            </h2>
+            <div className="w-16 h-0.5 mx-auto mb-6" style={{ background: "#E2B55C" }} />
+            <p style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>
+              Les vidéos seront disponibles très prochainement sur notre chaîne YouTube.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {[
+              "Ouverture de la soirée",
+              "Spectacle artistique",
+              "Discours de l'ONG",
+              "Ambiance de la soirée",
+            ].map((title, i) => (
+              <div
+                key={i}
+                className="rounded-xl p-6 flex items-center gap-4 border"
+                style={{ background: "#000000", borderColor: "#E2B55C33" }}
+              >
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background: "#E2B55C22", border: "1px solid #E2B55C44" }}
+                >
+                  <span className="text-2xl">▶️</span>
+                </div>
+                <div>
+                  <p className="font-semibold" style={{ color: "#E2B55C", fontFamily: "Playfair Display SC" }}>
+                    {title}
+                  </p>
+                  <p className="text-sm mt-1" style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>
+                    Disponible prochainement
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border transition-colors hover:bg-white/5"
+              style={{ borderColor: "#E2B55C", color: "#E2B55C", fontFamily: "Playfair Display SC" }}
+            >
+              🎥 Suivre notre chaîne YouTube
+            </a>
+          </div>
+        </div>
+      </section>
       <section className="py-20" style={{ background: "#000000" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
