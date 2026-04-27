@@ -1,18 +1,149 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronRight, Heart, Users, Target, Lightbulb } from "lucide-react";
+import { ChevronRight, Heart, Users, Target, Lightbulb, Send } from "lucide-react";
 
-/**
- * Home Page - Page d'accueil
- * Design: Modernisme humaniste avec asymétrie dynamique
- * Sections: Hero, À propos, Projet, Objectifs, Appel aux dons, Impact
- */
+// Hook: apparition au scroll
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+// Hook: compteur animé
+function useCounter(target: number, inView: boolean, duration = 1500) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, target, duration]);
+  return count;
+}
+
+// Hook: typewriter
+function useTypewriter(text: string, speed = 50) {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    let i = 0;
+    setDisplayed("");
+    const timer = setInterval(() => {
+      if (i < text.length) { setDisplayed(text.slice(0, i + 1)); i++; }
+      else clearInterval(timer);
+    }, speed);
+    return () => clearInterval(timer);
+  }, [text, speed]);
+  return displayed;
+}
+
+// Composant carrousel
+function PhotoCarousel() {
+  const photos = [
+    "/gala-1.jpg", "/gala-2.jpg", "/gala-3.jpg", "/gala-4.jpg",
+    "/gala-5.jpg", "/gala-6.jpg", "/gala-7.jpg", "/gala-8.jpg",
+    "/img-actions-france.jpg", "/img-projet-togo.jpg",
+  ];
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % photos.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [photos.length]);
+  return (
+    <div className="relative overflow-hidden rounded-2xl shadow-xl" style={{ height: "340px" }}>
+      {photos.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt={`Photo ${i + 1}`}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+          style={{ opacity: i === current ? 1 : 0 }}
+        />
+      ))}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {photos.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className="w-2 h-2 rounded-full transition-all duration-300"
+            style={{ background: i === current ? "#D4A017" : "rgba(255,255,255,0.5)" }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Composant carte animée au survol
+function AnimatedCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={`transition-all duration-300 ${className}`}
+      style={{
+        transform: hovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)",
+        boxShadow: hovered ? "0 12px 32px rgba(212,160,23,0.25)" : "0 2px 8px rgba(0,0,0,0.08)",
+        borderRadius: "12px",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Home() {
   const [donationAmount, setDonationAmount] = useState<number>(50);
+
+  // Typewriter sur le héro
+  const heroText = useTypewriter("Transmettons la chance d'apprendre", 45);
+
+  // Sections fade-in
+  const about = useInView();
+  const project = useInView();
+  const objectives = useInView();
+  const impact = useInView();
+  const actions = useInView();
+  const contact = useInView();
+  const stats = useInView();
+
+  // Compteurs animés
+  const count75 = useCounter(75, stats.inView);
+  const count2700 = useCounter(2700, stats.inView);
+
+  // Barre de progression don
+  const [progress] = useState(62);
+  const progressRef = useInView();
+  const [barWidth, setBarWidth] = useState(0);
+  useEffect(() => {
+    if (progressRef.inView) {
+      setTimeout(() => setBarWidth(progress), 200);
+    }
+  }, [progressRef.inView, progress]);
+
+  const fadeIn = (inView: boolean) => ({
+    opacity: inView ? 1 : 0,
+    transform: inView ? "translateY(0)" : "translateY(32px)",
+    transition: "opacity 0.7s ease, transform 0.7s ease",
+  });
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -30,49 +161,32 @@ export default function Home() {
             <rect width="1200" height="600" fill="url(#geo)" />
           </svg>
         </div>
-
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
             <div className="space-y-6">
               <h1
-                className="text-5xl md:text-6xl font-bold text-foreground leading-tight"
+                className="text-5xl md:text-6xl font-bold text-foreground leading-tight min-h-[120px]"
                 style={{ fontFamily: "Playfair Display" }}
               >
-                Transmettons la chance d'apprendre
+                {heroText}
+                <span className="animate-pulse text-primary">|</span>
               </h1>
-              <p className="text-lg text-muted-foreground max-w-lg">
-                L'éducation est la clé de l'avenir. Aidez-nous à construire un centre d'accueil pour les enfants en
-                situation de précarité au Togo.
+              <p className="text-lg text-muted-foreground max-w-lg" style={{ opacity: heroText.length > 20 ? 1 : 0, transition: "opacity 0.5s" }}>
+                L'éducation est la clé de l'avenir. Aidez-nous à construire un centre d'accueil pour les enfants en situation de précarité au Togo.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  onClick={() => document.getElementById("donate")?.scrollIntoView({ behavior: "smooth" })}
-                >
-                  Faire un don maintenant
-                  <ChevronRight className="ml-2 w-5 h-5" />
+              <div className="flex flex-col sm:flex-row gap-4 pt-4" style={{ opacity: heroText.length > 30 ? 1 : 0, transition: "opacity 0.5s" }}>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  onClick={() => document.getElementById("donate")?.scrollIntoView({ behavior: "smooth" })}>
+                  Faire un don maintenant <ChevronRight className="ml-2 w-5 h-5" />
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-foreground text-foreground hover:bg-foreground/5"
-                  onClick={() => document.getElementById("project")?.scrollIntoView({ behavior: "smooth" })}
-                >
+                <Button size="lg" variant="outline" className="border-foreground text-foreground hover:bg-foreground/5"
+                  onClick={() => document.getElementById("project")?.scrollIntoView({ behavior: "smooth" })}>
                   En savoir plus
                 </Button>
               </div>
             </div>
-
-            {/* Right Image */}
             <div className="relative">
-              <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663306568498/ZfRCCNzEXv9SwTGSQKuCQu/pasted_file_h06UPD_image_7c03d815.png"
-                alt="Équipe Destin'Action - Découvrez l'ONG"
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary rounded-full opacity-20 blur-2xl"></div>
+              <PhotoCarousel />
             </div>
           </div>
         </div>
@@ -80,53 +194,40 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-20 bg-white">
-        <div className="container">
+        <div ref={about.ref} className="container" style={fadeIn(about.inView)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
             <div className="space-y-6 order-2 lg:order-1">
-              <h2
-                className="text-4xl font-bold text-foreground"
-                style={{ fontFamily: "Playfair Display" }}
-              >
+              <h2 className="text-4xl font-bold text-foreground" style={{ fontFamily: "Playfair Display" }}>
                 Qui sommes-nous ?
               </h2>
               <p className="text-lg text-muted-foreground">
-                L'ONG Destin'Action se mobilise pour changer la vie des enfants en situation de précarité au Togo.
-                L'éducation est la clé de l'avenir, mais de nombreux enfants n'y ont pas accès.
+                L'ONG Destin'Action se mobilise pour changer la vie des enfants en situation de précarité au Togo. L'éducation est la clé de l'avenir, mais de nombreux enfants n'y ont pas accès.
               </p>
               <p className="text-lg text-muted-foreground">
-                Notre mission : construire un centre d'accueil à Apesito, à 45 minutes de Lomé, pour offrir aux enfants
-                et adolescents un espace sûr d'apprentissage, de développement personnel et de thérapie.
+                Notre mission : construire un centre d'accueil à Apesito, à 45 minutes de Lomé, pour offrir aux enfants et adolescents un espace sûr d'apprentissage, de développement personnel et de thérapie.
               </p>
-              <div className="pt-4">
-                <Button
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary/10"
-                  onClick={() => document.getElementById("project")?.scrollIntoView({ behavior: "smooth" })}
-                >
-                  Découvrir le projet <ChevronRight className="ml-2 w-4 h-4" />
-                </Button>
-              </div>
+              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10"
+                onClick={() => document.getElementById("project")?.scrollIntoView({ behavior: "smooth" })}>
+                Découvrir le projet <ChevronRight className="ml-2 w-4 h-4" />
+              </Button>
             </div>
-
-            {/* Right Stats */}
-            <div className="order-1 lg:order-2 grid grid-cols-2 gap-6">
-              <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 p-6">
-                <div className="text-4xl font-bold text-primary mb-2">2025</div>
-                <p className="text-sm text-foreground">Année de lancement du projet</p>
-              </Card>
-              <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 p-6">
-                <div className="text-4xl font-bold text-secondary mb-2">75</div>
-                <p className="text-sm text-foreground">Enfants accueillis au lancement</p>
-              </Card>
-              <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 p-6">
-                <div className="text-4xl font-bold text-primary mb-2">2700m²</div>
-                <p className="text-sm text-foreground">Terrain à Apesito</p>
-              </Card>
-              <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 p-6">
-                <div className="text-4xl font-bold text-secondary mb-2">∞</div>
-                <p className="text-sm text-foreground">Possibilités d'avenir</p>
-              </Card>
+            {/* Chiffres animés */}
+            <div ref={stats.ref} className="order-1 lg:order-2 grid grid-cols-2 gap-6">
+              {[
+                { value: "2025", label: "Année de lancement", color: "primary", isStatic: true },
+                { value: count75, suffix: "", label: "Enfants accueillis", color: "secondary", isStatic: false },
+                { value: count2700, suffix: "m²", label: "Terrain à Apesito", color: "primary", isStatic: false },
+                { value: "∞", label: "Possibilités d'avenir", color: "secondary", isStatic: true },
+              ].map((stat, i) => (
+                <AnimatedCard key={i}>
+                  <Card className={`bg-gradient-to-br from-${stat.color}/10 to-${stat.color}/5 border-${stat.color}/20 p-6`}>
+                    <div className={`text-4xl font-bold text-${stat.color} mb-2`}>
+                      {stat.isStatic ? stat.value : `${stat.value}${stat.suffix || ""}`}
+                    </div>
+                    <p className="text-sm text-foreground">{stat.label}</p>
+                  </Card>
+                </AnimatedCard>
+              ))}
             </div>
           </div>
         </div>
@@ -134,70 +235,43 @@ export default function Home() {
 
       {/* Project Section */}
       <section id="project" className="py-20 bg-background">
-        <div className="container">
-          <h2
-            className="text-4xl font-bold text-foreground text-center mb-12"
-            style={{ fontFamily: "Playfair Display" }}
-          >
+        <div ref={project.ref} className="container" style={fadeIn(project.inView)}>
+          <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
             Le Centre d'Accueil à Apesito
           </h2>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Image */}
             <div className="relative">
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663306568498/dZbELJqBGQJykckP.jpg"
-                alt="Centre d'accueil à Apesito avec l'équipe et les enfants"
-                className="w-full h-auto rounded-lg shadow-lg"
+                alt="Centre d'accueil à Apesito"
+                className="w-full h-auto rounded-lg shadow-lg hover:scale-105 transition-transform duration-500"
               />
             </div>
-
-            {/* Content */}
             <div className="space-y-6">
-              <div className="space-y-4">
-                <h3
-                  className="text-2xl font-bold text-foreground"
-                  style={{ fontFamily: "Playfair Display" }}
-                >
-                  Un espace d'épanouissement complet
-                </h3>
-                <p className="text-muted-foreground">
-                  Le centre proposera un accueil de jour et internat pour 75 enfants et adolescents en situation de
-                  précarité.
-                </p>
-              </div>
-
+              <h3 className="text-2xl font-bold text-foreground" style={{ fontFamily: "Playfair Display" }}>
+                Un espace d'épanouissement complet
+              </h3>
+              <p className="text-muted-foreground">
+                Le centre proposera un accueil de jour et internat pour 75 enfants et adolescents en situation de précarité.
+              </p>
               <div className="space-y-3">
-                <div className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Scolarisation et ateliers éducatifs</h4>
-                    <p className="text-sm text-muted-foreground">Intégration en écoles ordinaires et activités
-                      découverte</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Accompagnement personnalisé</h4>
-                    <p className="text-sm text-muted-foreground">Suivi psychologique et thérapeutique avec équipe
-                      interdisciplinaire</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Suivi familial</h4>
-                    <p className="text-sm text-muted-foreground">Moments réguliers pour partager l'évolution et le
-                      bien-être</p>
-                  </div>
-                </div>
+                {[
+                  { title: "Scolarisation et ateliers éducatifs", desc: "Intégration en écoles ordinaires et activités découverte" },
+                  { title: "Accompagnement personnalisé", desc: "Suivi psychologique et thérapeutique avec équipe interdisciplinaire" },
+                  { title: "Suivi familial", desc: "Moments réguliers pour partager l'évolution et le bien-être" },
+                ].map((item, i) => (
+                  <AnimatedCard key={i}>
+                    <div className="flex gap-3 p-3 rounded-xl bg-white border border-border">
+                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-sm font-bold">✓</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.desc}</p>
+                      </div>
+                    </div>
+                  </AnimatedCard>
+                ))}
               </div>
             </div>
           </div>
@@ -205,147 +279,105 @@ export default function Home() {
       </section>
 
       {/* Objectives Section */}
-      <section id="objectives" className="py-20 bg-white">
-        <div className="container">
-          <h2
-            className="text-4xl font-bold text-foreground text-center mb-12"
-            style={{ fontFamily: "Playfair Display" }}
-          >
+      <section className="py-20 bg-white">
+        <div ref={objectives.ref} className="container" style={fadeIn(objectives.inView)}>
+          <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
             Objectifs de la Campagne
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Objective 1 */}
-            <Card className="border-0 shadow-md hover:shadow-lg transition-shadow p-8 bg-gradient-to-br from-primary/5 to-transparent">
-              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
-                <Heart className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3
-                className="text-xl font-bold text-foreground mb-3"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Mobiliser les soutiens financiers
-              </h3>
-              <p className="text-muted-foreground">
-                Collecter des fonds pour financer la construction et le fonctionnement du centre d'accueil.
-              </p>
-            </Card>
-
-            {/* Objective 2 */}
-            <Card className="border-0 shadow-md hover:shadow-lg transition-shadow p-8 bg-gradient-to-br from-secondary/5 to-transparent">
-              <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mb-4">
-                <Lightbulb className="w-6 h-6 text-secondary-foreground" />
-              </div>
-              <h3
-                className="text-xl font-bold text-foreground mb-3"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Sensibiliser le public
-              </h3>
-              <p className="text-muted-foreground">
-                Mettre en lumière l'importance de l'accès à l'éducation pour tous comme facteur d'ascension sociale.
-              </p>
-            </Card>
-
-            {/* Objective 3 */}
-            <Card className="border-0 shadow-md hover:shadow-lg transition-shadow p-8 bg-gradient-to-br from-primary/5 to-transparent">
-              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3
-                className="text-xl font-bold text-foreground mb-3"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Créer une communauté
-              </h3>
-              <p className="text-muted-foreground">
-                Fédérer des ambassadeurs engagés autour de la mission de transmission de la chance d'apprendre.
-              </p>
-            </Card>
+            {[
+              { icon: <Heart className="w-6 h-6" />, title: "Mobiliser les soutiens financiers", desc: "Collecter des fonds pour financer la construction et le fonctionnement du centre d'accueil.", bg: "bg-primary" },
+              { icon: <Target className="w-6 h-6" />, title: "Sensibiliser le public", desc: "Mettre en lumière l'importance de l'accès à l'éducation comme facteur d'ascension sociale.", bg: "bg-secondary" },
+              { icon: <Users className="w-6 h-6" />, title: "Créer une communauté", desc: "Fédérer des ambassadeurs engagés autour de la mission de Destin'Action.", bg: "bg-primary" },
+            ].map((obj, i) => (
+              <AnimatedCard key={i}>
+                <Card className="p-8 h-full border-0 shadow-md">
+                  <div className={`w-12 h-12 ${obj.bg} rounded-xl flex items-center justify-center mb-5 text-white`}>
+                    {obj.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-3" style={{ fontFamily: "Playfair Display" }}>
+                    {obj.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{obj.desc}</p>
+                </Card>
+              </AnimatedCard>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Donation Section */}
+      {/* Barre de progression */}
+      <section className="py-12 bg-secondary">
+        <div ref={progressRef.ref} className="container text-center" style={fadeIn(progressRef.inView)}>
+          <h3 className="text-2xl font-bold text-secondary-foreground mb-2" style={{ fontFamily: "Playfair Display" }}>
+            Objectif de collecte
+          </h3>
+          <p className="text-secondary-foreground/70 mb-6">Ensemble, nous avançons vers la construction du centre</p>
+          <div className="max-w-2xl mx-auto">
+            <div className="flex justify-between text-sm text-secondary-foreground/80 mb-2">
+              <span>{progress}% atteint</span>
+              <span>Objectif : 100 000€</span>
+            </div>
+            <div className="h-4 bg-white/20 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-1000 ease-out"
+                style={{ width: `${barWidth}%`, background: "linear-gradient(90deg, #D4A017, #f0c040)" }}
+              />
+            </div>
+            <p className="text-secondary-foreground/60 text-xs mt-2">62 000€ collectés sur 100 000€</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Donate Section */}
       <section id="donate" className="py-20 bg-background">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2
-              className="text-4xl font-bold text-foreground mb-4"
-              style={{ fontFamily: "Playfair Display" }}
-            >
-              Faire un Don
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Votre générosité change des vies. Chaque contribution nous rapproche de notre objectif :
-              construire un centre d'accueil pour 75 enfants à Apesito, au Togo.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            {/* Coordonnées bancaires */}
-            <div className="bg-secondary rounded-2xl p-8 text-secondary-foreground">
-              <h3
-                className="text-2xl font-bold mb-6"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Coordonnées bancaires
-              </h3>
-              <div className="space-y-4">
-                <div className="bg-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">IBAN</p>
-                  <p className="text-lg font-bold tracking-wider">FR76 3000 4021 0400 0100 7093 304</p>
-                </div>
-                <div className="bg-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">BIC</p>
-                  <p className="text-lg font-bold">BNPAFRPPXXX</p>
-                </div>
-                <div className="bg-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Ordre du chèque</p>
-                  <p className="text-lg font-bold">Destin Action</p>
-                </div>
-                <div className="bg-primary/20 rounded-xl p-4 border border-primary/30">
-                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Engagement bâtisseurs</p>
-                  <p className="text-lg font-bold">43€ / mois sur 36 mois</p>
-                  <p className="text-sm opacity-80 mt-1">Devenez bâtisseur du centre d'Apesito</p>
-                </div>
-              </div>
-              <p className="text-xs opacity-60 mt-6 text-center">
-                Un reçu fiscal vous sera envoyé après réception de votre don.
-              </p>
+            <div className="relative">
+              <img
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663306568498/sGkvxROVztOmvAKR.jpg"
+                alt="Faire un don"
+                className="w-full h-auto rounded-lg shadow-lg hover:scale-105 transition-transform duration-500"
+              />
             </div>
-
-            {/* Impact des dons */}
             <div className="space-y-6">
-              <h3
-                className="text-2xl font-bold text-foreground"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                L'impact de votre don
-              </h3>
-              <div className="space-y-4">
-                {[
-                  { amount: "25€", impact: "Fournitures scolaires pour 1 enfant pendant 1 mois" },
-                  { amount: "50€", impact: "Repas équilibrés pour 1 enfant pendant 1 semaine" },
-                  { amount: "100€", impact: "1 mois de soutien psychologique individuel" },
-                  { amount: "250€", impact: "Équipement complet pour un atelier éducatif" },
-                  { amount: "43€/mois", impact: "Devenez bâtisseur et participez à la construction du centre" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-border shadow-sm">
-                    <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                      <span className="text-primary-foreground font-bold text-sm text-center leading-tight">{item.amount}</span>
-                    </div>
-                    <p className="text-muted-foreground">{item.impact}</p>
-                  </div>
-                ))}
+              <h2 className="text-4xl font-bold text-foreground" style={{ fontFamily: "Playfair Display" }}>
+                Faire un Don
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Chaque contribution, grande ou petite, nous rapproche de notre objectif. Votre générosité change des vies.
+              </p>
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-3">Montant du don</p>
+                <div className="grid grid-cols-4 gap-3 mb-4">
+                  {[25, 50, 100, 250].map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setDonationAmount(amount)}
+                      className="py-3 rounded-lg font-bold text-sm transition-all duration-200"
+                      style={{
+                        background: donationAmount === amount ? "#D4A017" : "#fff",
+                        color: donationAmount === amount ? "#2D5016" : "#2D5016",
+                        border: `2px solid ${donationAmount === amount ? "#D4A017" : "#e8dfd3"}`,
+                        transform: donationAmount === amount ? "scale(1.05)" : "scale(1)",
+                      }}
+                    >
+                      {amount}€
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="number"
+                  value={donationAmount}
+                  onChange={(e) => setDonationAmount(Number(e.target.value))}
+                  className="w-full px-4 py-3 border-2 border-border rounded-lg mb-4 text-sm focus:border-primary focus:outline-none"
+                  placeholder="Montant personnalisé"
+                />
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                  Donner {donationAmount}€ maintenant
+                </Button>
+                <p className="text-xs text-muted-foreground text-center mt-3">Don sécurisé · Reçu fiscal fourni</p>
               </div>
-              <a
-                href="/donate"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3 rounded-lg transition-colors"
-              >
-                En savoir plus sur les dons →
-              </a>
             </div>
           </div>
         </div>
@@ -353,209 +385,146 @@ export default function Home() {
 
       {/* Impact Section */}
       <section className="py-20 bg-white">
-        <div className="container">
-          <h2
-            className="text-4xl font-bold text-foreground text-center mb-12"
-            style={{ fontFamily: "Playfair Display" }}
-          >
+        <div ref={impact.ref} className="container" style={fadeIn(impact.inView)}>
+          <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
             L'Impact de Votre Soutien
           </h2>
-
-          <div className="relative">
+          <div className="relative mb-10">
             <img
               src="/img-projet-togo.jpg"
-              alt="Notre projet au Togo — Centre d'accueil à Apesito"
-              className="w-full h-auto rounded-lg shadow-lg mb-8 object-cover max-h-96"
+              alt="Notre projet au Togo"
+              className="w-full h-auto rounded-lg shadow-lg object-cover max-h-96 hover:scale-105 transition-transform duration-500"
             />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-white border-2 border-primary/20 p-6">
-                <Target className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-semibold text-foreground mb-2">Contribuer à l'épanouissement</h3>
-                <p className="text-sm text-muted-foreground">
-                  Aider les jeunes en situation de précarité à construire leur personnalité et à se projeter.
-                </p>
-              </Card>
-
-              <Card className="bg-white border-2 border-secondary/20 p-6">
-                <Lightbulb className="w-8 h-8 text-secondary mb-3" />
-                <h3 className="font-semibold text-foreground mb-2">Favoriser la préservation du lien familial</h3>
-                <p className="text-sm text-muted-foreground">
-                  Renforcer les relations entre enfants, adolescents et leurs familles dans un environnement naturel.
-                </p>
-              </Card>
-
-              <Card className="bg-white border-2 border-primary/20 p-6">
-                <Heart className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-semibold text-foreground mb-2">Donner un espace pour penser et s'ouvrir au savoir</h3>
-                <p className="text-sm text-muted-foreground">
-                  Offrir aux enfants les outils pour apprendre et se construire un avenir.
-                </p>
-              </Card>
-            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: <Target />, title: "Contribuer à l'épanouissement", desc: "Aider les jeunes en situation de précarité à construire leur personnalité et à se projeter.", color: "primary" },
+              { icon: <Lightbulb />, title: "Préserver le lien familial", desc: "Renforcer les relations entre enfants, adolescents et leurs familles dans un environnement naturel.", color: "secondary" },
+              { icon: <Heart />, title: "Ouvrir au savoir", desc: "Offrir aux enfants les outils pour apprendre et se construire un avenir.", color: "primary" },
+            ].map((item, i) => (
+              <AnimatedCard key={i}>
+                <Card className={`bg-white border-2 border-${item.color}/20 p-6`}>
+                  <div className={`w-8 h-8 text-${item.color} mb-3`}>{item.icon}</div>
+                  <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </Card>
+              </AnimatedCard>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Galerie & Actions Section */}
+      {/* Nos Actions — Carrousel manuel */}
       <section className="py-20 bg-background">
-        <div className="container">
-          <h2
-            className="text-4xl font-bold text-foreground text-center mb-4"
-            style={{ fontFamily: "Playfair Display" }}
-          >
+        <div ref={actions.ref} className="container" style={fadeIn(actions.inView)}>
+          <h2 className="text-4xl font-bold text-foreground text-center mb-4" style={{ fontFamily: "Playfair Display" }}>
             Nos Actions
           </h2>
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             Destin'Action agit en France et au Togo pour accompagner les jeunes en difficulté.
           </p>
-
-          {/* Grille d'images avec lightbox */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { src: "/img-ce-que-nous-faisons.jpg", alt: "Ce que nous faisons" },
               { src: "/img-actions-france.jpg", alt: "Nos actions en France" },
               { src: "/img-citation-enfant.jpg", alt: "Chaque enfant mérite un avenir meilleur" },
-              { src: "/img-ong-france-togo.jpg", alt: "L'ONG Destin'Action en France et au Togo" },
+              { src: "/img-ong-france-togo.jpg", alt: "L'ONG en France et au Togo" },
               { src: "/img-rejoignez-nous.jpg", alt: "Rejoignez Destin'Action" },
               { src: "/img-reseaux-sociaux.jpg", alt: "Suivez-nous sur les réseaux sociaux" },
             ].map((img, i) => (
-              <div
-                key={i}
-                className="rounded-xl overflow-hidden shadow-md cursor-pointer group relative bg-secondary/5"
-                onClick={() => {
-                  const overlay = document.createElement("div");
-                  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;";
-                  const imgEl = document.createElement("img");
-                  imgEl.src = img.src;
-                  imgEl.alt = img.alt;
-                  imgEl.style.cssText = "max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;";
-                  const closeBtn = document.createElement("div");
-                  closeBtn.innerHTML = "✕";
-                  closeBtn.style.cssText = "position:absolute;top:20px;right:30px;color:white;font-size:32px;cursor:pointer;font-weight:bold;";
-                  overlay.appendChild(imgEl);
-                  overlay.appendChild(closeBtn);
-                  overlay.onclick = () => document.body.removeChild(overlay);
-                  document.body.appendChild(overlay);
-                }}
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-64 object-contain bg-secondary/5 group-hover:scale-105 transition-transform duration-300 p-2"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 px-4 py-2 rounded-full text-sm font-medium">
-                    Voir en grand
-                  </span>
+              <AnimatedCard key={i} className="cursor-pointer">
+                <div
+                  className="rounded-xl overflow-hidden relative group"
+                  style={{ border: "1px solid #e8dfd3" }}
+                  onClick={() => {
+                    const overlay = document.createElement("div");
+                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;";
+                    const imgEl = document.createElement("img");
+                    imgEl.src = img.src;
+                    imgEl.style.cssText = "max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;";
+                    overlay.appendChild(imgEl);
+                    overlay.onclick = () => document.body.removeChild(overlay);
+                    document.body.appendChild(overlay);
+                  }}
+                >
+                  <img src={img.src} alt={img.alt} className="w-full h-64 object-contain bg-secondary/5 p-2 group-hover:scale-105 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 px-4 py-2 rounded-full text-sm font-medium">Voir en grand</span>
+                  </div>
                 </div>
-              </div>
+              </AnimatedCard>
             ))}
           </div>
-
-          {/* CTA réseaux sociaux */}
           <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://www.facebook.com/profile.php?id=61579844312949&locale=fr_FR"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-colors"
-            >
+            <a href="https://www.facebook.com/profile.php?id=61579844312949&locale=fr_FR" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-colors">
               Facebook — Destin'Action
             </a>
-            <a
-              href="https://www.instagram.com/ongdestinaction/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-            >
+            <a href="https://www.instagram.com/ongdestinaction/" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors">
               Instagram — @ongdestinaction
             </a>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact + Don Section */}
       <section id="contact" className="py-20 bg-background">
-        <div className="container">
+        <div ref={contact.ref} className="container" style={fadeIn(contact.inView)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-            {/* Gauche — Faire un don */}
-            <div className="bg-secondary rounded-2xl p-8 text-secondary-foreground">
-              <h2
-                className="text-3xl font-bold mb-4"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Faire un don
-              </h2>
-              <p className="text-secondary-foreground/80 mb-8">
-                Chaque contribution, grande ou petite, nous rapproche de notre objectif. Votre générosité change des vies.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {[
-                  { amount: "25€", desc: "Fournitures scolaires" },
-                  { amount: "50€", desc: "Repas une semaine" },
-                  { amount: "100€", desc: "Soutien psychologique" },
-                  { amount: "250€", desc: "Équipement atelier" },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white/10 rounded-xl p-4 text-center">
-                    <p className="text-2xl font-bold text-primary">{item.amount}</p>
-                    <p className="text-xs text-secondary-foreground/70 mt-1">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <Button
-                size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                onClick={() => window.location.href = "/donate"}
-              >
-                Faire un don maintenant
-              </Button>
-            </div>
-
-            {/* Droite — Formulaire de contact */}
-            <div className="bg-white rounded-2xl shadow-md p-8 border border-border">
-              <h2
-                className="text-3xl font-bold text-foreground mb-4"
-                style={{ fontFamily: "Playfair Display" }}
-              >
-                Nous contacter
-              </h2>
-              <p className="text-muted-foreground text-sm mb-6">
-                Remplissez ce formulaire et nous vous répondrons sous 48h.
-              </p>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Nom *</label>
-                    <input type="text" placeholder="Dupont" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Prénom *</label>
-                    <input type="text" placeholder="Jean" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                  </div>
+            <AnimatedCard>
+              <div className="bg-secondary rounded-2xl p-8 text-secondary-foreground">
+                <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "Playfair Display" }}>Faire un don</h2>
+                <p className="text-secondary-foreground/80 mb-8">Chaque contribution, grande ou petite, nous rapproche de notre objectif.</p>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  {[{ amount: "25€", desc: "Fournitures scolaires" }, { amount: "50€", desc: "Repas une semaine" }, { amount: "100€", desc: "Soutien psychologique" }, { amount: "250€", desc: "Équipement atelier" }].map((item, i) => (
+                    <div key={i} className="bg-white/10 rounded-xl p-4 text-center">
+                      <p className="text-2xl font-bold text-primary">{item.amount}</p>
+                      <p className="text-xs text-secondary-foreground/70 mt-1">{item.desc}</p>
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Âge *</label>
-                  <input type="number" placeholder="Ex: 35" min="1" max="120" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Email *</label>
-                  <input type="email" placeholder="jean@exemple.fr" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Téléphone *</label>
-                  <input type="tel" placeholder="06 12 34 56 78" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                </div>
-                <Button
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  onClick={() => window.location.href = "/contact"}
-                >
-                  Envoyer →
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  onClick={() => window.location.href = "/donate"}>
+                  Faire un don maintenant
                 </Button>
               </div>
-            </div>
+            </AnimatedCard>
 
+            <AnimatedCard>
+              <div className="bg-white rounded-2xl shadow-md p-8 border border-border">
+                <h2 className="text-3xl font-bold text-foreground mb-4" style={{ fontFamily: "Playfair Display" }}>Nous contacter</h2>
+                <p className="text-muted-foreground text-sm mb-6">Remplissez ce formulaire et nous vous répondrons sous 48h.</p>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-foreground mb-1">Nom *</label>
+                      <input type="text" placeholder="Dupont" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-foreground mb-1">Prénom *</label>
+                      <input type="text" placeholder="Jean" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Âge *</label>
+                    <input type="number" placeholder="Ex: 35" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Email *</label>
+                    <input type="email" placeholder="jean@exemple.fr" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Téléphone *</label>
+                    <input type="tel" placeholder="06 12 34 56 78" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                  </div>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                    onClick={() => window.location.href = "/contact"}>
+                    <Send className="w-4 h-4 mr-2" /> Envoyer →
+                  </Button>
+                </div>
+              </div>
+            </AnimatedCard>
           </div>
         </div>
       </section>
