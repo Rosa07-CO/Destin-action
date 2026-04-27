@@ -16,14 +16,14 @@ import Donate from "@/pages/Donate";
 function Router() {
   return (
     <Switch>
-      <Route path="" component={Home} />
-      <Route path="about" component={About} />
-      <Route path="project" component={Project} />
-      <Route path="evenement" component={Evenement} />
-      <Route path="donate" component={Donate} />
-      <Route path="contact" component={Contact} />
-      <Route path="legal" component={Legal} />
-      <Route path="404" component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/project" component={Project} />
+      <Route path="/evenement" component={Evenement} />
+      <Route path="/donate" component={Donate} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/legal" component={Legal} />
+      <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
