@@ -11,8 +11,11 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Send, CheckCircle, Clock, Mes
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
+    age: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
   });
@@ -25,9 +28,8 @@ export default function Contact() {
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) return;
     setLoading(true);
-    // Simule un envoi (à connecter à un vrai backend)
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -193,17 +195,49 @@ export default function Contact() {
                     </p>
 
                     <div className="space-y-5">
-                      {/* Nom */}
+                      {/* Nom + Prénom */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-foreground mb-1.5">
+                            Nom <span className="text-primary">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            placeholder="Dupont"
+                            className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-foreground mb-1.5">
+                            Prénom <span className="text-primary">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            placeholder="Jean"
+                            className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Âge */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-1.5">
-                          Nom complet <span className="text-primary">*</span>
+                          Âge <span className="text-primary">*</span>
                         </label>
                         <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
+                          type="number"
+                          name="age"
+                          value={formData.age}
                           onChange={handleChange}
-                          placeholder="Jean Dupont"
+                          placeholder="Ex: 35"
+                          min="1"
+                          max="120"
                           className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
                         />
                       </div>
@@ -219,6 +253,21 @@ export default function Contact() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="jean@exemple.fr"
+                          className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
+                        />
+                      </div>
+
+                      {/* Téléphone */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-1.5">
+                          Numéro de téléphone <span className="text-primary">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="06 12 34 56 78"
                           className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
                         />
                       </div>
@@ -246,14 +295,14 @@ export default function Contact() {
                       {/* Message */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-1.5">
-                          Message <span className="text-primary">*</span>
+                          Message
                         </label>
                         <textarea
                           name="message"
                           value={formData.message}
                           onChange={handleChange}
                           placeholder="Écrivez votre message ici..."
-                          rows={5}
+                          rows={4}
                           className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background resize-none"
                         />
                       </div>
@@ -262,7 +311,7 @@ export default function Contact() {
                         size="lg"
                         className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                         onClick={handleSubmit}
-                        disabled={loading || !formData.name || !formData.email || !formData.message}
+                        disabled={loading || !formData.firstName || !formData.lastName || !formData.email || !formData.phone}
                       >
                         {loading ? (
                           <span className="flex items-center gap-2">
@@ -275,7 +324,7 @@ export default function Contact() {
                         ) : (
                           <span className="flex items-center gap-2">
                             <Send className="w-4 h-4" />
-                            Envoyer le message
+                            Envoyer
                           </span>
                         )}
                       </Button>
@@ -300,7 +349,7 @@ export default function Contact() {
                         Message envoyé !
                       </h2>
                       <p className="text-muted-foreground max-w-sm">
-                        Merci <strong>{formData.name}</strong> pour votre message. Nous vous répondrons dans les plus brefs délais, sous 48h.
+                        Merci <strong>{formData.firstName} {formData.lastName}</strong> pour votre message. Nous vous répondrons dans les plus brefs délais, sous 48h.
                       </p>
                     </div>
                     <Button
@@ -308,7 +357,7 @@ export default function Contact() {
                       className="border-primary text-primary hover:bg-primary/10"
                       onClick={() => {
                         setSubmitted(false);
-                        setFormData({ name: "", email: "", subject: "", message: "" });
+                        setFormData({ firstName: "", lastName: "", age: "", email: "", phone: "", subject: "", message: "" });
                       }}
                     >
                       Envoyer un autre message

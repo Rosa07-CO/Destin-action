@@ -269,73 +269,83 @@ export default function Home() {
       {/* Donation Section */}
       <section id="donate" className="py-20 bg-background">
         <div className="container">
+          <div className="text-center mb-12">
+            <h2
+              className="text-4xl font-bold text-foreground mb-4"
+              style={{ fontFamily: "Playfair Display" }}
+            >
+              Faire un Don
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Votre générosité change des vies. Chaque contribution nous rapproche de notre objectif :
+              construire un centre d'accueil pour 75 enfants à Apesito, au Togo.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Image */}
-            <div className="relative order-2 lg:order-1">
-              <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663306568498/sGkvxROVztOmvAKR.jpg"
-                alt="Coordonnées bancaires pour envoyer votre don - IBAN, BIC et informations de virement"
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-              <p className="text-center text-sm text-muted-foreground mt-4 font-semibold">
-                Coordonnées bancaires pour l'envoi de votre don
+
+            {/* Coordonnées bancaires */}
+            <div className="bg-secondary rounded-2xl p-8 text-secondary-foreground">
+              <h3
+                className="text-2xl font-bold mb-6"
+                style={{ fontFamily: "Playfair Display" }}
+              >
+                Coordonnées bancaires
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">IBAN</p>
+                  <p className="text-lg font-bold tracking-wider">FR76 3000 4021 0400 0100 7093 304</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">BIC</p>
+                  <p className="text-lg font-bold">BNPAFRPPXXX</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Ordre du chèque</p>
+                  <p className="text-lg font-bold">Destin Action</p>
+                </div>
+                <div className="bg-primary/20 rounded-xl p-4 border border-primary/30">
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Engagement bâtisseurs</p>
+                  <p className="text-lg font-bold">43€ / mois sur 36 mois</p>
+                  <p className="text-sm opacity-80 mt-1">Devenez bâtisseur du centre d'Apesito</p>
+                </div>
+              </div>
+              <p className="text-xs opacity-60 mt-6 text-center">
+                Un reçu fiscal vous sera envoyé après réception de votre don.
               </p>
             </div>
 
-            {/* Form */}
-            <div className="order-1 lg:order-2 space-y-8">
-              <div>
-                <h2
-                  className="text-4xl font-bold text-foreground mb-4"
-                  style={{ fontFamily: "Playfair Display" }}
-                >
-                  Faire un don
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  Chaque contribution, grande ou petite, nous rapproche de notre objectif. Votre générosité change
-                  des vies.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <label className="text-sm font-semibold text-foreground">Montant du don</label>
-                <div className="grid grid-cols-4 gap-3">
-                  {[25, 50, 100, 250].map((amount) => (
-                    <button
-                      key={amount}
-                      onClick={() => setDonationAmount(amount)}
-                      className={`py-3 rounded-lg font-semibold transition-all ${
-                        donationAmount === amount
-                          ? "bg-primary text-primary-foreground shadow-lg"
-                          : "bg-white border-2 border-border text-foreground hover:border-primary"
-                      }`}
-                    >
-                      {amount}€
-                    </button>
-                  ))}
-                </div>
-                <div className="relative">
-                  <input
-                    type="number"
-                    placeholder="Montant personnalisé"
-                    value={donationAmount}
-                    onChange={(e) => setDonationAmount(Number(e.target.value))}
-                    className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none"
-                  />
-                  <span className="absolute right-4 top-3 text-muted-foreground">€</span>
-                </div>
-              </div>
-
-              <Button
-                size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base py-6"
+            {/* Impact des dons */}
+            <div className="space-y-6">
+              <h3
+                className="text-2xl font-bold text-foreground"
+                style={{ fontFamily: "Playfair Display" }}
               >
-                Donner {donationAmount}€ maintenant
-              </Button>
-
-              <p className="text-xs text-muted-foreground text-center">
-                Votre don est sécurisé et confidentiel. Vous recevrez un reçu fiscal.
-              </p>
+                L'impact de votre don
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { amount: "25€", impact: "Fournitures scolaires pour 1 enfant pendant 1 mois" },
+                  { amount: "50€", impact: "Repas équilibrés pour 1 enfant pendant 1 semaine" },
+                  { amount: "100€", impact: "1 mois de soutien psychologique individuel" },
+                  { amount: "250€", impact: "Équipement complet pour un atelier éducatif" },
+                  { amount: "43€/mois", impact: "Devenez bâtisseur et participez à la construction du centre" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-border shadow-sm">
+                    <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-foreground font-bold text-sm text-center leading-tight">{item.amount}</span>
+                    </div>
+                    <p className="text-muted-foreground">{item.impact}</p>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="/donate"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3 rounded-lg transition-colors"
+              >
+                En savoir plus sur les dons →
+              </a>
             </div>
           </div>
         </div>
@@ -467,22 +477,86 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-background">
-        <div className="container text-center">
-          <h2
-            className="text-4xl font-bold text-foreground mb-6"
-            style={{ fontFamily: "Playfair Display" }}
-          >
-            Des questions ?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Nous serions heureux de répondre à vos questions sur le projet, nos activités ou comment nous soutenir.
-          </p>
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-          >
-            Nous contacter
-          </Button>
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+            {/* Gauche — Faire un don */}
+            <div className="bg-secondary rounded-2xl p-8 text-secondary-foreground">
+              <h2
+                className="text-3xl font-bold mb-4"
+                style={{ fontFamily: "Playfair Display" }}
+              >
+                Faire un don
+              </h2>
+              <p className="text-secondary-foreground/80 mb-8">
+                Chaque contribution, grande ou petite, nous rapproche de notre objectif. Votre générosité change des vies.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {[
+                  { amount: "25€", desc: "Fournitures scolaires" },
+                  { amount: "50€", desc: "Repas une semaine" },
+                  { amount: "100€", desc: "Soutien psychologique" },
+                  { amount: "250€", desc: "Équipement atelier" },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white/10 rounded-xl p-4 text-center">
+                    <p className="text-2xl font-bold text-primary">{item.amount}</p>
+                    <p className="text-xs text-secondary-foreground/70 mt-1">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <Button
+                size="lg"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                onClick={() => window.location.href = "/donate"}
+              >
+                Faire un don maintenant
+              </Button>
+            </div>
+
+            {/* Droite — Formulaire de contact */}
+            <div className="bg-white rounded-2xl shadow-md p-8 border border-border">
+              <h2
+                className="text-3xl font-bold text-foreground mb-4"
+                style={{ fontFamily: "Playfair Display" }}
+              >
+                Nous contacter
+              </h2>
+              <p className="text-muted-foreground text-sm mb-6">
+                Remplissez ce formulaire et nous vous répondrons sous 48h.
+              </p>
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Nom *</label>
+                    <input type="text" placeholder="Dupont" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Prénom *</label>
+                    <input type="text" placeholder="Jean" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Âge *</label>
+                  <input type="number" placeholder="Ex: 35" min="1" max="120" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Email *</label>
+                  <input type="email" placeholder="jean@exemple.fr" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Téléphone *</label>
+                  <input type="tel" placeholder="06 12 34 56 78" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
+                </div>
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  onClick={() => window.location.href = "/contact"}
+                >
+                  Envoyer →
+                </Button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
