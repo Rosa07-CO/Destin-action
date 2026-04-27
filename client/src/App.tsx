@@ -9,7 +9,7 @@ import About from "@/pages/About";
 import Legal from "@/pages/Legal";
 import Contact from "@/pages/Contact";
 import Project from "@/pages/Project";
-import Objectives from "@/pages/Objectives";
+import Evenement from "@/pages/Evenement";
 import Donate from "@/pages/Donate";
 
 
@@ -19,7 +19,7 @@ function Router() {
       <Route path="" component={Home} />
       <Route path="about" component={About} />
       <Route path="project" component={Project} />
-      <Route path="objectives" component={Objectives} />
+      <Route path="evenement" component={Evenement} />
       <Route path="donate" component={Donate} />
       <Route path="contact" component={Contact} />
       <Route path="legal" component={Legal} />
