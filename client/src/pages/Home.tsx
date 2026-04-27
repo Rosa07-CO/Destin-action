@@ -353,9 +353,9 @@ export default function Home() {
 
           <div className="relative">
             <img
-              src="https://private-us-east-1.manuscdn.com/sessionFile/vhuFKEkSpNWR4xl4XUdQ2K/sandbox/nT9uvMXSogVOBZSCRzmW4R-img-3_1770219912000_na1fn_aW1wYWN0LXNlY3Rpb24.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmh1RktFa1NwTldSNHhsNFhVZFEySy9zYW5kYm94L25UOXV2TVhTb2dWT0JaU0NSem1XNFItaW1nLTNfMTc3MDIxOTkxMjAwMF9uYTFmbl9hVzF3WVdOMExYTmxZM1JwYjI0LnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Ek8UeBaAhdIr0DipKX3ChaOTF~ZoaLGWm-NJMdGVJ38QnJtzU2rSCCTO3yFZiKcPBYVzHwnSoU65mfhQUih1wR-8xUXCKuSLFmUYzFoBNx54eGgyvyd0kt6WVZH2zy2ekiO0nkNX-ecaWC05ScnehSUT9G1Aj2wm9jVTiZ3B1RVkJGUN6UEzwP2GAa6IRoyOD08SM8C8945DB1IXP5X7BQqyomV4tEwDMqH1JSt5bX0hWGKMvAaJa36K-W7ICLW9~DqdY4gtkkJXxl3fgyErowiZjf5y4aPRKvvMBZM6osrbz8gwnHsqN28VtGfFbh66ufzjLc4lU0myfYlx2702mQ__"
-              alt="Impact de votre soutien"
-              className="w-full h-auto rounded-lg shadow-lg mb-8"
+              src="/img-projet-togo.jpg"
+              alt="Notre projet au Togo — Centre d'accueil à Apesito"
+              className="w-full h-auto rounded-lg shadow-lg mb-8 object-cover max-h-96"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -383,6 +383,98 @@ export default function Home() {
                 </p>
               </Card>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Galerie & Actions Section */}
+      <section className="py-20 bg-background">
+        <div className="container">
+          <h2
+            className="text-4xl font-bold text-foreground text-center mb-4"
+            style={{ fontFamily: "Playfair Display" }}
+          >
+            Nos Actions
+          </h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Destin'Action agit en France et au Togo pour accompagner les jeunes en difficulté.
+          </p>
+
+          {/* Grille d'images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Image 1 — Ce que nous faisons */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-ce-que-nous-faisons.jpg"
+                alt="Ce que nous faisons"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Image 2 — Nos actions en France */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-actions-france.jpg"
+                alt="Nos actions en France"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Image 3 — Citation */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-citation-enfant.jpg"
+                alt="Chaque enfant mérite un avenir meilleur"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Image 4 — ONG France & Togo */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-ong-france-togo.jpg"
+                alt="L'ONG Destin'Action en France et au Togo"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Image 5 — Rejoignez-nous */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-rejoignez-nous.jpg"
+                alt="Rejoignez Destin'Action"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Image 6 — Réseaux sociaux */}
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <img
+                src="/img-reseaux-sociaux.jpg"
+                alt="Suivez-nous sur les réseaux sociaux"
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+
+          {/* CTA réseaux sociaux */}
+          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://www.facebook.com/profile.php?id=61579844312949&locale=fr_FR"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-colors"
+            >
+              Facebook — Destin'Action
+            </a>
+            <a
+              href="https://www.instagram.com/ongdestinaction/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+            >
+              Instagram — @ongdestinaction
+            </a>
           </div>
         </div>
       </section>
