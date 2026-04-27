@@ -102,6 +102,19 @@ export default function Evenement() {
               { src: "/gala-5.jpg", alt: "Soirée Gala" },
               { src: "/gala-6.jpg", alt: "Ambiance de la soirée" },
               { src: "/gala-7.jpg", alt: "Invités sur le tapis rouge" },
+              { src: "/gala-8.jpg", alt: "Invités Gala" },
+              { src: "/gala-9.jpg", alt: "Tapis rouge Gala" },
+              { src: "/gala-10.jpg", alt: "Moment émouvant" },
+              { src: "/gala-11.jpg", alt: "Salle de gala" },
+              { src: "/gala-12.jpg", alt: "Cocktail de bienvenue" },
+              { src: "/gala-13.jpg", alt: "Invités tapis rouge" },
+              { src: "/gala-14.jpg", alt: "Couple Gala" },
+              { src: "/gala-15.jpg", alt: "Invités élégants" },
+              { src: "/gala-16.jpg", alt: "Tapis rouge Gala" },
+              { src: "/gala-17.jpg", alt: "Invités Gala" },
+              { src: "/gala-18.jpg", alt: "Soirée Gala" },
+              { src: "/gala-19.jpg", alt: "Couple tapis rouge" },
+              { src: "/gala-20.jpg", alt: "Cocktail soirée" },
             ].map((img, i) => (
               <div
                 key={i}
