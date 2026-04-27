@@ -18,7 +18,8 @@ export default function Footer() {
               <img
                 src="/logo.jpg"
                 alt="ONG Destin'Action"
-                className="w-12 h-12 object-contain rounded brightness-0 invert"
+                className="w-12 h-12 object-contain rounded"
+                style={{ background: "white", padding: "2px", borderRadius: "6px" }}
               />
               <h3 className="font-bold text-lg" style={{ fontFamily: "Playfair Display" }}>
                 Destin'Action

@@ -129,15 +129,7 @@ export default function Home() {
   const count75 = useCounter(75, stats.inView);
   const count2700 = useCounter(2700, stats.inView);
 
-  // Barre de progression don
-  const [progress] = useState(62);
   const progressRef = useInView();
-  const [barWidth, setBarWidth] = useState(0);
-  useEffect(() => {
-    if (progressRef.inView) {
-      setTimeout(() => setBarWidth(progress), 200);
-    }
-  }, [progressRef.inView, progress]);
 
   const fadeIn = (inView: boolean) => ({
     opacity: inView ? 1 : 0,
@@ -347,25 +339,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Barre de progression */}
+      {/* Section chiffres clés animés */}
       <section className="py-12 bg-secondary">
-        <div ref={progressRef.ref} className="container text-center" style={fadeIn(progressRef.inView)}>
-          <h3 className="text-2xl font-bold text-secondary-foreground mb-2" style={{ fontFamily: "Playfair Display" }}>
-            Objectif de collecte
-          </h3>
-          <p className="text-secondary-foreground/70 mb-6">Ensemble, nous avançons vers la construction du centre</p>
-          <div className="max-w-2xl mx-auto">
-            <div className="flex justify-between text-sm text-secondary-foreground/80 mb-2">
-              <span>{progress}% atteint</span>
-              <span>Objectif : 100 000€</span>
-            </div>
-            <div className="h-4 bg-white/20 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${barWidth}%`, background: "linear-gradient(90deg, #D4A017, #f0c040)" }}
-              />
-            </div>
-            <p className="text-secondary-foreground/60 text-xs mt-2">62 000€ collectés sur 100 000€</p>
+        <div ref={progressRef.ref} className="container" style={fadeIn(progressRef.inView)}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {[
+              { emoji: "🌍", label: "Pays d'action", value: "France & Togo" },
+              { emoji: "👦", label: "Enfants bénéficiaires", value: "75" },
+              { emoji: "🏗️", label: "Terrain à Apesito", value: "2700m²" },
+              { emoji: "💛", label: "Engagement bâtisseurs", value: "43€/mois" },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center gap-2">
+                <span className="text-3xl">{item.emoji}</span>
+                <p className="text-2xl font-bold text-primary" style={{ fontFamily: "Playfair Display" }}>{item.value}</p>
+                <p className="text-sm text-secondary-foreground/70">{item.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
