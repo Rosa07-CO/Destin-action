@@ -15,7 +15,7 @@ export default function Header() {
     { label: "Accueil", href: "/" },
     { label: "À propos", href: "/about" },
     { label: "Le Projet", href: "/project" },
-    { label: "Objectifs", href: "/objectives" },
+    { label: "Événement", href: "/evenement" },
     { label: "Donner", href: "/donate" },
     { label: "Contact", href: "/contact" },
   ];

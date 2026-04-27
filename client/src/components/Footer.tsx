@@ -35,7 +35,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href="/about" className="hover:text-accent transition-colors">À propos</a></li>
               <li><a href="/project" className="hover:text-accent transition-colors">Le Projet</a></li>
-              <li><a href="/objectives" className="hover:text-accent transition-colors">Objectifs</a></li>
+              <li><a href="/evenement" className="hover:text-accent transition-colors">Événement</a></li>
               <li><a href="/donate" className="hover:text-accent transition-colors">Donner</a></li>
               <li><a href="/contact" className="hover:text-accent transition-colors">Contact</a></li>
             </ul>
