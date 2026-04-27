@@ -540,14 +540,12 @@ export default function Home() {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             Destin'Action agit en France et au Togo pour accompagner les jeunes en difficulté.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
               { src: "/img-ce-que-nous-faisons.jpg", alt: "Ce que nous faisons" },
               { src: "/img-actions-france.jpg", alt: "Nos actions en France" },
               { src: "/img-citation-enfant.jpg", alt: "Chaque enfant mérite un avenir meilleur" },
               { src: "/img-ong-france-togo.jpg", alt: "L'ONG en France et au Togo" },
-              { src: "/img-rejoignez-nous.jpg", alt: "Rejoignez Destin'Action" },
-              { src: "/img-reseaux-sociaux.jpg", alt: "Suivez-nous sur les réseaux sociaux" },
             ].map((img, i) => (
               <AnimatedCard key={i} className="cursor-pointer">
                 <div
