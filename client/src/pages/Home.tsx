@@ -91,7 +91,79 @@ function PhotoCarousel() {
   );
 }
 
-// Composant carte animée au survol
+// Composant carrousel Ambassadeurs — 3 photos visibles avec flèches
+function AmbassadeurCarousel() {
+  const photos = [
+    "/ambassadeur-1.jpg", "/ambassadeur-2.jpg", "/ambassadeur-3.jpg",
+    "/ambassadeur-4.jpg", "/ambassadeur-5.jpg", "/ambassadeur-6.jpg",
+    "/ambassadeur-7.jpg", "/ambassadeur-8.jpg", "/ambassadeur-9.jpg",
+    "/ambassadeur-10.jpg", "/ambassadeur-11.jpg", "/ambassadeur-12.jpg",
+    "/ambassadeur-13.jpg", "/ambassadeur-14.jpg", "/ambassadeur-15.jpg",
+    "/ambassadeur-16.jpg",
+  ];
+  const [start, setStart] = useState(0);
+  const visible = 3;
+
+  const prev = () => setStart(s => (s - 1 + photos.length) % photos.length);
+  const next = () => setStart(s => (s + 1) % photos.length);
+
+  const getVisible = () => {
+    return [0, 1, 2].map(i => photos[(start + i) % photos.length]);
+  };
+
+  return (
+    <div className="relative">
+      {/* Flèche gauche */}
+      <button
+        onClick={prev}
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        style={{ background: "#2D5016", color: "#D4A017" }}
+      >
+        ‹
+      </button>
+
+      {/* Photos */}
+      <div className="grid grid-cols-3 gap-4 px-6">
+        {getVisible().map((src, i) => (
+          <div
+            key={`${src}-${i}`}
+            className="rounded-2xl overflow-hidden shadow-md"
+            style={{ aspectRatio: "1" }}
+          >
+            <img
+              src={src}
+              alt={`Ambassadeur ${start + i + 1}`}
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Flèche droite */}
+      <button
+        onClick={next}
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        style={{ background: "#2D5016", color: "#D4A017" }}
+      >
+        ›
+      </button>
+
+      {/* Points de navigation */}
+      <div className="flex justify-center gap-2 mt-6">
+        {photos.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setStart(i)}
+            className="w-2 h-2 rounded-full transition-all duration-300"
+            style={{ background: i === start ? "#D4A017" : "#e8dfd3" }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
 function AnimatedCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -413,33 +485,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Impact Section */}
+      {/* Section Nos Ambassadeurs — Carrousel */}
       <section className="py-20 bg-white">
         <div ref={impact.ref} className="container" style={fadeIn(impact.inView)}>
-          <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
-            L'Impact de Votre Soutien
+          <h2 className="text-4xl font-bold text-foreground text-center mb-4" style={{ fontFamily: "Playfair Display" }}>
+            Nos Ambassadeurs
           </h2>
-          <div className="relative mb-10">
-            <img
-              src="/img-projet-togo.jpg"
-              alt="Notre projet au Togo"
-              className="w-full h-auto rounded-lg shadow-lg object-cover max-h-96 hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: <Target />, title: "Contribuer à l'épanouissement", desc: "Aider les jeunes en situation de précarité à construire leur personnalité et à se projeter.", color: "primary" },
-              { icon: <Lightbulb />, title: "Préserver le lien familial", desc: "Renforcer les relations entre enfants, adolescents et leurs familles dans un environnement naturel.", color: "secondary" },
-              { icon: <Heart />, title: "Ouvrir au savoir", desc: "Offrir aux enfants les outils pour apprendre et se construire un avenir.", color: "primary" },
-            ].map((item, i) => (
-              <AnimatedCard key={i}>
-                <Card className={`bg-white border-2 border-${item.color}/20 p-6`}>
-                  <div className={`w-8 h-8 text-${item.color} mb-3`}>{item.icon}</div>
-                  <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </Card>
-              </AnimatedCard>
-            ))}
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Ils croient en notre mission et partagent leurs mots pour inspirer le changement.
+          </p>
+
+          {/* Carrousel 3 photos visibles */}
+          <AmbassadeurCarousel />
+
+          {/* L'Impact de Votre Soutien — en dessous */}
+          <div className="mt-20">
+            <h2 className="text-4xl font-bold text-foreground text-center mb-12" style={{ fontFamily: "Playfair Display" }}>
+              L'Impact de Votre Soutien
+            </h2>
+            <div className="relative mb-10">
+              <img
+                src="/img-projet-togo.jpg"
+                alt="Notre projet au Togo"
+                className="w-full h-auto rounded-lg shadow-lg object-cover max-h-96 hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { icon: <Target className="w-8 h-8" />, title: "Contribuer à l'épanouissement", desc: "Aider les jeunes en situation de précarité à construire leur personnalité et à se projeter.", color: "primary" },
+                { icon: <Lightbulb className="w-8 h-8" />, title: "Préserver le lien familial", desc: "Renforcer les relations entre enfants, adolescents et leurs familles dans un environnement naturel.", color: "secondary" },
+                { icon: <Heart className="w-8 h-8" />, title: "Ouvrir au savoir", desc: "Offrir aux enfants les outils pour apprendre et se construire un avenir.", color: "primary" },
+              ].map((item, i) => (
+                <AnimatedCard key={i}>
+                  <Card className={`bg-white border-2 border-${item.color}/20 p-6`}>
+                    <div className={`w-8 h-8 text-${item.color} mb-3`}>{item.icon}</div>
+                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  </Card>
+                </AnimatedCard>
+              ))}
+            </div>
           </div>
         </div>
       </section>
