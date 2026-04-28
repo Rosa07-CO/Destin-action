@@ -52,38 +52,52 @@ function useTypewriter(text: string, speed = 50) {
   return displayed;
 }
 
-// Composant carrousel
+// Composant carrousel Hero — photos complètes sans coupure
 function PhotoCarousel() {
   const photos = [
-    "/gala-1.jpg", "/gala-2.jpg", "/gala-3.jpg", "/gala-4.jpg",
-    "/gala-5.jpg", "/gala-6.jpg", "/gala-7.jpg", "/gala-8.jpg",
-    "/img-actions-france.jpg", "/img-projet-togo.jpg",
+    { src: "/hero-1.jpg", alt: "Enfants au Togo — activités sportives" },
+    { src: "/hero-2.jpg", alt: "Bénévole avec enfants au Togo" },
+    { src: "/hero-3.jpg", alt: "Distribution de fournitures scolaires" },
+    { src: "/hero-4.jpg", alt: "Enfants sur la plage de Lomé" },
+    { src: "/hero-5.jpg", alt: "Équipe Destin'Action au Togo" },
   ];
   const [current, setCurrent] = useState(0);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent(prev => (prev + 1) % photos.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(timer);
   }, [photos.length]);
+
   return (
-    <div className="relative overflow-hidden rounded-2xl shadow-xl" style={{ height: "340px" }}>
-      {photos.map((src, i) => (
+    <div className="relative overflow-hidden rounded-2xl shadow-xl bg-black" style={{ height: "400px" }}>
+      {photos.map((photo, i) => (
         <img
           key={i}
-          src={src}
-          alt={`Photo ${i + 1}`}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-          style={{ opacity: i === current ? 1 : 0 }}
+          src={photo.src}
+          alt={photo.alt}
+          className="absolute inset-0 w-full h-full transition-opacity duration-700"
+          style={{
+            opacity: i === current ? 1 : 0,
+            objectFit: "contain",
+            objectPosition: "center",
+            background: "#000",
+          }}
         />
       ))}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+      {/* Points de navigation */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
         {photos.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
-            style={{ background: i === current ? "#D4A017" : "rgba(255,255,255,0.5)" }}
+            className="rounded-full transition-all duration-300"
+            style={{
+              background: i === current ? "#D4A017" : "rgba(255,255,255,0.5)",
+              width: i === current ? "20px" : "8px",
+              height: "8px",
+            }}
           />
         ))}
       </div>
