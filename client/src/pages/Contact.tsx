@@ -88,10 +88,10 @@ export default function Contact() {
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-1">Email</p>
                       <a
-                        href="mailto:contact@destinaction.org"
+                        href="mailto:destinactiontogo@gmail.com"
                         className="text-muted-foreground hover:text-primary transition-colors text-sm"
                       >
-                        contact@destinaction.org
+                        destinactiontogo@gmail.com
                       </a>
                     </div>
                   </div>
@@ -103,10 +103,10 @@ export default function Contact() {
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-1">Téléphone</p>
                       <a
-                        href="tel:+22890000000"
+                        href="tel:+33766624894"
                         className="text-muted-foreground hover:text-primary transition-colors text-sm"
                       >
-                        +228 90 00 00 00
+                        07.66.62.48.94
                       </a>
                     </div>
                   </div>
@@ -117,7 +117,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-1">Localisation</p>
-                      <p className="text-muted-foreground text-sm">Apesito, Togo<br />À 45 min de Lomé</p>
+                      <p className="text-muted-foreground text-sm">BP WESON, 185 rue de l'avenir<br />60430 Noailles, France</p>
                     </div>
                   </div>
 
