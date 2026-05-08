@@ -211,10 +211,10 @@ export default function Project() {
 
           <div className="max-w-3xl mx-auto space-y-8">
             {[
-              { phase: "Phase 1", date: "2025 - Q1", description: "Préparation du terrain et des plans" },
-              { phase: "Phase 2", date: "2025 - Q2/Q3", description: "Construction du centre" },
-              { phase: "Phase 3", date: "2025 - Q4", description: "Recrutement de l'équipe" },
-              { phase: "Phase 4", date: "Octobre 2025", description: "Ouverture officielle du centre" },
+              { phase: "Phase 1", date: "Fin 2025", description: "Préparation des plans par l'architecte" },
+              { phase: "Phase 2", date: "Fin 2026 – Début 2027", description: "Dépôt du permis de construire" },
+              { phase: "Phase 3", date: "2027 – 2030", description: "Construction et recrutement de l'équipe" },
+              { phase: "Phase 4", date: "2030", description: "Inauguration du site" },
             ].map((item, index) => (
               <div key={index} className="flex gap-6 items-start">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
