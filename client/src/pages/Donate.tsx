@@ -13,7 +13,7 @@ export default function Donate() {
   const [donationAmount, setDonationAmount] = useState<number>(50);
   const [customAmount, setCustomAmount] = useState<string>("");
 
-  const predefinedAmounts = [25, 50, 100, 250];
+  const predefinedAmounts = [25, 50, 82, 250];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -152,19 +152,19 @@ export default function Donate() {
               {
                 icon: <Gift className="w-8 h-8" />,
                 amount: "50€",
-                description: "Repas équilibrés pour 1 semaine",
+                description: "1 mois de repas équilibrés",
                 color: "secondary",
               },
               {
                 icon: <Heart className="w-8 h-8" />,
-                amount: "100€",
-                description: "1 mois de soutien psychologique",
+                amount: "82€",
+                description: "Frais de scolarité, uniforme et éducation",
                 color: "primary",
               },
               {
                 icon: <Users className="w-8 h-8" />,
                 amount: "250€",
-                description: "Équipement pour l'atelier éducatif",
+                description: "Prise en charge annuelle complète d'un enfant",
                 color: "secondary",
               },
             ].map((item, index) => (

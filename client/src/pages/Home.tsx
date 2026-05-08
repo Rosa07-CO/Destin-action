@@ -475,7 +475,7 @@ export default function Home() {
               <div>
                 <p className="text-sm font-semibold text-foreground mb-3">Montant du don</p>
                 <div className="grid grid-cols-4 gap-3 mb-4">
-                  {[25, 50, 100, 250].map((amount) => (
+                  {[25, 50, 82, 250].map((amount) => (
                     <button
                       key={amount}
                       onClick={() => setDonationAmount(amount)}
@@ -606,7 +606,7 @@ export default function Home() {
                 <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "Playfair Display" }}>Faire un don</h2>
                 <p className="text-secondary-foreground/80 mb-8">Chaque contribution, grande ou petite, nous rapproche de notre objectif.</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  {[{ amount: "25€", desc: "Fournitures scolaires" }, { amount: "50€", desc: "Repas une semaine" }, { amount: "100€", desc: "Soutien psychologique" }, { amount: "250€", desc: "Équipement atelier" }].map((item, i) => (
+                  {[{ amount: "25€", desc: "Fournitures scolaires" }, { amount: "50€", desc: "1 mois de repas équilibrés" }, { amount: "82€", desc: "Scolarité, uniforme et éducation" }, { amount: "250€", desc: "Prise en charge annuelle complète" }].map((item, i) => (
                     <div key={i} className="bg-white/10 rounded-xl p-4 text-center">
                       <p className="text-2xl font-bold text-primary">{item.amount}</p>
                       <p className="text-xs text-secondary-foreground/70 mt-1">{item.desc}</p>
