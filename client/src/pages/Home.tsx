@@ -636,10 +636,6 @@ export default function Home() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Âge *</label>
-                    <input type="number" placeholder="Ex: 35" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
-                  </div>
-                  <div>
                     <label className="block text-xs font-semibold text-foreground mb-1">Email *</label>
                     <input type="email" placeholder="jean@exemple.fr" className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:border-primary focus:outline-none text-sm bg-background" />
                   </div>

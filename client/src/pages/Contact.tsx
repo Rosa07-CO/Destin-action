@@ -13,7 +13,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    age: "",
     email: "",
     phone: "",
     subject: "",
@@ -225,23 +224,6 @@ export default function Contact() {
                         </div>
                       </div>
 
-                      {/* Âge */}
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-1.5">
-                          Âge <span className="text-primary">*</span>
-                        </label>
-                        <input
-                          type="number"
-                          name="age"
-                          value={formData.age}
-                          onChange={handleChange}
-                          placeholder="Ex: 35"
-                          min="1"
-                          max="120"
-                          className="w-full px-4 py-3 border-2 border-border rounded-lg focus:border-primary focus:outline-none transition-colors text-sm bg-background"
-                        />
-                      </div>
-
                       {/* Email */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-1.5">
@@ -357,7 +339,7 @@ export default function Contact() {
                       className="border-primary text-primary hover:bg-primary/10"
                       onClick={() => {
                         setSubmitted(false);
-                        setFormData({ firstName: "", lastName: "", age: "", email: "", phone: "", subject: "", message: "" });
+                        setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" });
                       }}
                     >
                       Envoyer un autre message
