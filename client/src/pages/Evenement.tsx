@@ -122,36 +122,7 @@ export default function Evenement() {
         </div>
       </section>
 
-      {/* Vidéos */}
-      <section className="py-20" style={{ background: "#0d0d0d" }}>
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4"
-              style={{ fontFamily: "Playfair Display SC", color: "#E2B55C" }}>
-              Vidéos de la Soirée
-            </h2>
-            <div className="w-16 h-0.5 mx-auto mb-6" style={{ background: "#E2B55C" }} />
-            <p style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>
-              Les vidéos seront disponibles très prochainement.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {["Ouverture de la soirée", "Spectacle artistique", "Discours de l'ONG", "Ambiance de la soirée"].map((title, i) => (
-              <div key={i} className="rounded-xl p-6 flex items-center gap-4 border"
-                style={{ background: "#000000", borderColor: "#E2B55C33" }}>
-                <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: "#E2B55C22", border: "1px solid #E2B55C44" }}>
-                  <span className="text-2xl">▶️</span>
-                </div>
-                <div>
-                  <p className="font-semibold" style={{ color: "#E2B55C", fontFamily: "Playfair Display SC" }}>{title}</p>
-                  <p className="text-sm mt-1" style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>Disponible prochainement</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Présentation + Programme */}
       <section className="py-20" style={{ background: "#000000" }}>
