@@ -227,6 +227,102 @@ export default function Evenement() {
         </div>
       </section>
 
+      {/* Remerciement Partenaires + Carrousel */}
+      <section className="py-20" style={{ background: "linear-gradient(135deg, #000000 0%, #1a1209 100%)" }}>
+        <div className="container max-w-4xl mx-auto text-center">
+
+          {/* Titre */}
+          <div className="inline-flex items-center gap-2 mb-6 px-5 py-2 rounded-full border"
+            style={{ borderColor: "#E2B55C", color: "#E2B55C" }}>
+            <Heart className="w-4 h-4" />
+            <span className="text-sm font-semibold tracking-widest uppercase" style={{ fontFamily: "Playfair Display SC" }}>
+              Nos Partenaires
+            </span>
+          </div>
+
+          <h2 className="text-5xl mb-6"
+            style={{ fontFamily: "Playfair Display", color: "#E2B55C", fontStyle: "italic" }}>
+            Un grand merci à nos partenaires
+          </h2>
+          <div className="w-16 h-0.5 mx-auto mb-10" style={{ background: "#E2B55C" }} />
+
+          {/* Message chaleureux */}
+          <p className="text-xl mb-6 leading-relaxed" style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>
+            Ce Gala de Charité n'aurait jamais vu le jour sans le soutien précieux et indéfectible de nos partenaires.
+            Leur générosité, leur engagement et leur confiance sont le cœur battant de cette aventure humaine.
+          </p>
+          <p className="text-xl mb-6 leading-relaxed" style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}>
+            Chacun d'entre eux a choisi de croire en notre mission — offrir à des enfants la chance d'un avenir meilleur.
+            Ce soutien nous touche profondément et nous donne la force de continuer, jour après jour.
+          </p>
+          <p className="text-2xl font-bold mb-12" style={{ fontFamily: "Playfair Display SC", color: "#E2B55C" }}>
+            Ensemble, nous construisons des destins. Merci du fond du cœur. 🌍✨
+          </p>
+
+          {/* Carrousel des logos */}
+          <div style={{ overflow: "hidden", position: "relative" }}>
+            <div
+              id="partenaires-track"
+              style={{
+                display: "flex",
+                gap: "48px",
+                alignItems: "center",
+                animation: "scrollPartenaires 20s linear infinite",
+                width: "max-content",
+              }}>
+              {[
+                { src: "/partenaire-hdance.jpg", nom: "#H-Dance", bg: "#000000" },
+                { src: "/partenaire-afriquetere.jpg", nom: "Afrique Tere Cosmetics", bg: "#ffffff" },
+                { src: "/partenaire-boulangerie.jpg", nom: "Boulangerie Lise & Jérôme", bg: "#ffffff" },
+                { src: "/partenaire-filordor.jpg", nom: "Fil d'Or Créations", bg: "#f0f0f0" },
+                { src: "/partenaire-kolias.jpg", nom: "Kolias Sécurité", bg: "#ffffff" },
+                { src: "/partenaire-jardinfleuri.jpg", nom: "Au Jardin Fleuri", bg: "#f5f5f0" },
+                /* duplication pour boucle infinie */
+                { src: "/partenaire-hdance.jpg", nom: "#H-Dance", bg: "#000000" },
+                { src: "/partenaire-afriquetere.jpg", nom: "Afrique Tere Cosmetics", bg: "#ffffff" },
+                { src: "/partenaire-boulangerie.jpg", nom: "Boulangerie Lise & Jérôme", bg: "#ffffff" },
+                { src: "/partenaire-filordor.jpg", nom: "Fil d'Or Créations", bg: "#f0f0f0" },
+                { src: "/partenaire-kolias.jpg", nom: "Kolias Sécurité", bg: "#ffffff" },
+                { src: "/partenaire-jardinfleuri.jpg", nom: "Au Jardin Fleuri", bg: "#f5f5f0" },
+              ].map((p, i) => (
+                <div key={i} className="flex-shrink-0 flex flex-col items-center gap-3">
+                  <div
+                    className="rounded-2xl overflow-hidden flex items-center justify-center"
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      background: p.bg,
+                      border: "2px solid #E2B55C44",
+                      padding: "12px",
+                    }}>
+                    <img
+                      src={p.src}
+                      alt={p.nom}
+                      style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+                    />
+                  </div>
+                  <p className="text-xs font-semibold tracking-wide text-center" style={{ color: "#C1A47E", fontFamily: "Playfair Display SC", maxWidth: "160px" }}>
+                    {p.nom}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Animation CSS inline */}
+          <style>{`
+            @keyframes scrollPartenaires {
+              0%   { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            #partenaires-track:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
+
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
