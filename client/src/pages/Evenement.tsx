@@ -91,6 +91,11 @@ export default function Evenement() {
               "/gala-2.jpg", "/gala-6.jpg", "/gala-11.jpg",
               "/gala-18.jpg", "/gala-19.jpg", "/gala-20.jpg", "/gala-21.jpg",
               "/gala-22.jpg", "/gala-23.jpg", "/gala-24.jpg",
+              "/gala-25.jpg", "/gala-26.jpg", "/gala-27.jpg", "/gala-28.jpg",
+              "/gala-30.jpg", "/gala-31.jpg", "/gala-32.jpg", "/gala-33.jpg",
+              "/gala-34.jpg", "/gala-35.jpg", "/gala-36.jpg", "/gala-37.jpg",
+              "/gala-38.jpg", "/gala-39.jpg", "/gala-40.jpg", "/gala-41.jpg",
+              "/gala-43.jpg",
             ].map((src, i) => (
               <div key={i}
                 className="rounded-xl overflow-hidden cursor-pointer group relative"
