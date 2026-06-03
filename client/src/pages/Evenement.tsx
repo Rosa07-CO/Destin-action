@@ -100,8 +100,8 @@ export default function Evenement() {
               "/gala-48.jpg", "/gala-49.jpg", "/gala-50.jpg", "/gala-51.jpg",
             ].map((src, i) => (
               <div key={i}
-                className="rounded-xl overflow-hidden cursor-pointer group relative"
-                style={{ border: "1px solid #E2B55C22", aspectRatio: "1" }}
+                className="rounded-xl overflow-hidden cursor-pointer group relative flex items-center justify-center"
+                style={{ border: "1px solid #E2B55C22", background: "#0d0d0d" }}
                 onClick={() => {
                   const overlay = document.createElement("div");
                   overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;";
@@ -117,7 +117,7 @@ export default function Evenement() {
                   document.body.appendChild(overlay);
                 }}>
                 <img src={src} alt={`Gala ${i + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
                   <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-2xl">🔍</span>
                 </div>
