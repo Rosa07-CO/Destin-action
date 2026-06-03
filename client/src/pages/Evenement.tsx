@@ -88,7 +88,11 @@ export default function Evenement() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
-              "/gala-2.jpg", "/gala-6.jpg", "/gala-11.jpg",
+              "/gala-1.jpg", "/gala-2.jpg", "/gala-3.jpg", "/gala-4.jpg",
+              "/gala-5.jpg", "/gala-6.jpg", "/gala-7.jpg", "/gala-8.jpg",
+              "/gala-9.jpg", "/gala-10.jpg", "/gala-11.jpg", "/gala-12.jpg",
+              "/gala-13.jpg", "/gala-14.jpg", "/gala-15.jpg", "/gala-16.jpg",
+              "/gala-17.jpg",
             ].map((src, i) => (
               <div key={i}
                 className="rounded-xl overflow-hidden cursor-pointer group relative"
