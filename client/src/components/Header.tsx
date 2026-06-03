@@ -1,21 +1,34 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-/**
- * Header Component - Navigation principale
- * Design: Asymétrie moderniste avec logo et navigation claire
- * Couleurs: Jaune moutarde (#D4A017) et vert foncé (#2D5016)
- */
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isEvenementOpen, setIsEvenementOpen] = useState(false);
+  const [isMobileEvenementOpen, setIsMobileEvenementOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Fermer le dropdown si clic en dehors
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsEvenementOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const evenementItems = [
+    { label: "🎭 Gala de charité", href: "/evenement/gala" },
+    { label: "🛍️ Braderie", href: "/evenement/braderie" },
+    { label: "⚽ Sport", href: "/evenement/sport" },
+  ];
 
   const navItems = [
     { label: "Accueil", href: "/" },
     { label: "À propos", href: "/about" },
     { label: "Le Projet", href: "/project" },
-    { label: "Événement", href: "/evenement" },
     { label: "Donner", href: "/donate" },
     { label: "Contact", href: "/contact" },
   ];
@@ -49,6 +62,47 @@ export default function Header() {
               {item.label}
             </a>
           ))}
+
+          {/* Menu déroulant Événements */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsEvenementOpen(!isEvenementOpen)}
+              className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
+            >
+              Événements
+              <ChevronDown
+                className="w-4 h-4 transition-transform duration-200"
+                style={{ transform: isEvenementOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+              />
+            </button>
+
+            {isEvenementOpen && (
+              <div
+                className="absolute top-full left-0 mt-2 w-52 rounded-xl shadow-lg border overflow-hidden"
+                style={{ background: "#1a1209", borderColor: "#E2B55C44" }}
+              >
+                {evenementItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsEvenementOpen(false)}
+                    className="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-150"
+                    style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "#E2B55C22";
+                      (e.currentTarget as HTMLElement).style.color = "#E2B55C";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                      (e.currentTarget as HTMLElement).style.color = "#C1A47E";
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
 
         {/* CTA Button Desktop */}
@@ -91,6 +145,35 @@ export default function Header() {
                 {item.label}
               </a>
             ))}
+
+            {/* Événements mobile */}
+            <div>
+              <button
+                onClick={() => setIsMobileEvenementOpen(!isMobileEvenementOpen)}
+                className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors w-full"
+              >
+                Événements
+                <ChevronDown
+                  className="w-4 h-4 transition-transform duration-200"
+                  style={{ transform: isMobileEvenementOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                />
+              </button>
+              {isMobileEvenementOpen && (
+                <div className="mt-2 ml-4 flex flex-col gap-2">
+                  {evenementItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      onClick={() => { setIsMenuOpen(false); setIsMobileEvenementOpen(false); }}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Button
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold w-full"
               onClick={() => {

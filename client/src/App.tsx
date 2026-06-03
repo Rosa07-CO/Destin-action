@@ -10,6 +10,8 @@ import Legal from "@/pages/Legal";
 import Contact from "@/pages/Contact";
 import Project from "@/pages/Project";
 import Evenement from "@/pages/Evenement";
+import Braderie from "@/pages/Braderie";
+import Sport from "@/pages/Sport";
 import Donate from "@/pages/Donate";
 
 
@@ -20,6 +22,9 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/project" component={Project} />
       <Route path="/evenement" component={Evenement} />
+      <Route path="/evenement/gala" component={Evenement} />
+      <Route path="/evenement/braderie" component={Braderie} />
+      <Route path="/evenement/sport" component={Sport} />
       <Route path="/donate" component={Donate} />
       <Route path="/contact" component={Contact} />
       <Route path="/legal" component={Legal} />
