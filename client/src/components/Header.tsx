@@ -79,7 +79,7 @@ export default function Header() {
             {isEvenementOpen && (
               <div
                 className="absolute top-full left-0 mt-2 w-52 rounded-xl shadow-lg border overflow-hidden"
-                style={{ background: "#1a1209", borderColor: "#E2B55C44" }}
+                style={{ background: "var(--card)", borderColor: "var(--border)" }}
               >
                 {evenementItems.map((item) => (
                   <a
@@ -87,14 +87,14 @@ export default function Header() {
                     href={item.href}
                     onClick={() => setIsEvenementOpen(false)}
                     className="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-150"
-                    style={{ color: "#C1A47E", fontFamily: "Playfair Display" }}
+                    style={{ color: "var(--foreground)", fontFamily: "Playfair Display" }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "#E2B55C22";
-                      (e.currentTarget as HTMLElement).style.color = "#E2B55C";
+                      (e.currentTarget as HTMLElement).style.background = "#D4A01722";
+                      (e.currentTarget as HTMLElement).style.color = "#D4A017";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.background = "transparent";
-                      (e.currentTarget as HTMLElement).style.color = "#C1A47E";
+                      (e.currentTarget as HTMLElement).style.color = "var(--foreground)";
                     }}
                   >
                     {item.label}
