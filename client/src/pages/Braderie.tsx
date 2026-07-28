@@ -77,6 +77,34 @@ export default function Braderie() {
         </div>
       </section>
 
+      {/* Section photos — notre stand */}
+      <section className="py-16 bg-secondary/5">
+        <div className="container">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-foreground mb-4" style={{ fontFamily: "Playfair Display" }}>
+              Nous serons présents
+            </h2>
+            <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #D4A01733" }}>
+              <img
+                src="/braderie-stand.png"
+                alt="Stand Destin'Action lors d'une braderie solidaire"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #D4A01733" }}>
+              <img
+                src="/braderie-annonce.png"
+                alt="Annonce de La Grande Friperie de Persan, samedi 18 octobre"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section infos — style cartes Home */}
       <section className="py-20 bg-secondary/5" ref={section1.ref} style={fadeIn(section1.inView)}>
         <div className="container">
