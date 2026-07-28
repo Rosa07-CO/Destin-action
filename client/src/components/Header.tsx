@@ -87,7 +87,7 @@ export default function Header() {
                     href={item.href}
                     onClick={() => setIsEvenementOpen(false)}
                     className="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-150"
-                    style={{ color: "var(--foreground)", fontFamily: "Playfair Display" }}
+                    style={{ color: "var(--foreground)" }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.background = "#D4A01722";
                       (e.currentTarget as HTMLElement).style.color = "#D4A017";
