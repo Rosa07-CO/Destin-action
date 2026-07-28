@@ -37,21 +37,6 @@ function useCounter(target: number, inView: boolean, duration = 1500) {
   return count;
 }
 
-// Hook: typewriter
-function useTypewriter(text: string, speed = 50) {
-  const [displayed, setDisplayed] = useState("");
-  useEffect(() => {
-    let i = 0;
-    setDisplayed("");
-    const timer = setInterval(() => {
-      if (i < text.length) { setDisplayed(text.slice(0, i + 1)); i++; }
-      else clearInterval(timer);
-    }, speed);
-    return () => clearInterval(timer);
-  }, [text, speed]);
-  return displayed;
-}
-
 // Composant carrousel Hero — photos complètes sans coupure
 function PhotoCarousel() {
   const photos = [
@@ -208,8 +193,8 @@ function AnimatedCard({ children, className = "" }: { children: React.ReactNode;
 export default function Home() {
   const [donationAmount, setDonationAmount] = useState<number>(50);
 
-  // Typewriter sur le héro
-  const heroText = useTypewriter("Transmettons la chance d'apprendre", 45);
+  // Titre du héro (statique, sans animation de frappe)
+  const heroText = "Transmettons la chance d'apprendre";
 
   // Sections fade-in
   const about = useInView();
@@ -256,7 +241,6 @@ export default function Home() {
                 style={{ fontFamily: "Playfair Display" }}
               >
                 {heroText}
-                <span className="animate-pulse text-primary">|</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-lg" style={{ opacity: heroText.length > 20 ? 1 : 0, transition: "opacity 0.5s" }}>
                 L'éducation est la clé de l'avenir. Aidez-nous à construire un centre d'accueil pour les enfants en situation de précarité au Togo.
