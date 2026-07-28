@@ -55,12 +55,12 @@ export default function Braderie() {
 
             <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight"
               style={{ fontFamily: "Playfair Display" }}>
-              À venir <span className="text-primary">prochainement</span>
+              Un <span className="text-primary">grand merci</span> à tous
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-xl">
-              Nous préparons une braderie solidaire au profit des enfants du Togo.
-              Chaque achat sera un geste pour l'avenir d'un enfant.
+              Nous avons organisé une braderie solidaire au profit des enfants du Togo.
+              Grâce à votre générosité, chaque achat a été un geste pour l'avenir d'un enfant.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -82,7 +82,7 @@ export default function Braderie() {
         <div className="container">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-foreground mb-4" style={{ fontFamily: "Playfair Display" }}>
-              Nous serons présents
+              Nous y étions
             </h2>
             <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
           </div>
@@ -110,16 +110,16 @@ export default function Braderie() {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4" style={{ fontFamily: "Playfair Display" }}>
-              L'événement en préparation
+              Retour sur l'événement
             </h2>
             <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { icon: <Calendar className="w-8 h-8 text-primary" />, titre: "Date", texte: "Annoncée prochainement" },
-              { icon: <MapPin className="w-8 h-8 text-primary" />, titre: "Lieu", texte: "À confirmer" },
-              { icon: <Clock className="w-8 h-8 text-primary" />, titre: "Horaires", texte: "À confirmer" },
+              { icon: <Calendar className="w-8 h-8 text-primary" />, titre: "Date", texte: "Samedi 18 octobre" },
+              { icon: <MapPin className="w-8 h-8 text-primary" />, titre: "Lieu", texte: "Salle Marcel Cachin, Persan" },
+              { icon: <Clock className="w-8 h-8 text-primary" />, titre: "Horaires", texte: "10h - 18h" },
             ].map((item, i) => (
               <div key={i}
                 className="rounded-2xl p-8 text-center border border-border shadow-sm hover:shadow-md transition-all duration-300"
