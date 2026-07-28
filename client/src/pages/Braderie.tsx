@@ -86,19 +86,21 @@ export default function Braderie() {
             </h2>
             <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #D4A01733" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+            <div className="rounded-2xl overflow-hidden flex items-center justify-center bg-white"
+              style={{ border: "2px solid #D4A01733", height: "420px" }}>
               <img
                 src="/braderie-stand.png"
                 alt="Stand Destin'Action lors d'une braderie solidaire"
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #D4A01733" }}>
+            <div className="rounded-2xl overflow-hidden flex items-center justify-center bg-white"
+              style={{ border: "2px solid #D4A01733", height: "420px" }}>
               <img
                 src="/braderie-annonce.png"
                 alt="Annonce de La Grande Friperie de Persan, samedi 18 octobre"
-                className="w-full h-auto object-cover"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
           </div>
