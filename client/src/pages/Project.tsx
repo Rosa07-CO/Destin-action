@@ -23,7 +23,7 @@ export default function Project() {
             Le Centre d'Accueil à Apesito
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl">
-            Un espace d'épanouissement complet pour 75 enfants et adolescents en situation de précarité au Togo.
+            Un espace d'épanouissement complet pour 75 enfants et adolescents (25 en accueil de jour, 50 en internat) en situation de précarité au Togo.
           </p>
         </div>
       </section>
@@ -51,17 +51,21 @@ export default function Project() {
                   Un espace d'épanouissement
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  Le centre proposera un accueil de jour et internat pour 75 enfants et adolescents en situation de
-                  précarité. Situé à Apesito, à 45 minutes de Lomé, il offre un environnement sûr, bienveillant et
-                  propice au développement personnel.
+                  Le centre proposera un accueil de jour (25 places) et un internat (50 places), pour 75 enfants et
+                  adolescents en situation de précarité. Situé à Apesito, à 45 minutes de Lomé, il offre un environnement
+                  sûr, bienveillant et propice au développement personnel.
                 </p>
               </div>
 
               {/* Key Stats */}
               <div className="grid grid-cols-2 gap-4">
                 <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 p-4">
-                  <div className="text-3xl font-bold text-primary mb-1">75</div>
-                  <p className="text-sm text-foreground">Enfants accueillis</p>
+                  <div className="text-3xl font-bold text-primary mb-1">25</div>
+                  <p className="text-sm text-foreground">Places en accueil de jour</p>
+                </Card>
+                <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 p-4">
+                  <div className="text-3xl font-bold text-secondary mb-1">50</div>
+                  <p className="text-sm text-foreground">Places en internat</p>
                 </Card>
                 <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 p-4">
                   <div className="text-3xl font-bold text-secondary mb-1">2700m²</div>

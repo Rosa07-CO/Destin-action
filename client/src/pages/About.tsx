@@ -63,8 +63,8 @@ export default function About() {
               </Card>
               <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 p-6 text-center">
                 <Users className="w-8 h-8 text-secondary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2">Bénéficiaires</h3>
-                <p className="text-sm text-muted-foreground">75 enfants et adolescents</p>
+                <h3 className="font-semibold text-foreground mb-2">Bénéficiaires prévus</h3>
+                <p className="text-sm text-muted-foreground">25 en accueil de jour, 50 en internat</p>
               </Card>
               <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 p-6 text-center">
                 <Target className="w-8 h-8 text-primary mx-auto mb-3" />

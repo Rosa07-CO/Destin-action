@@ -221,7 +221,8 @@ export default function Home() {
   const stats = useInView();
 
   // Compteurs animés
-  const count75 = useCounter(75, stats.inView);
+  const count25 = useCounter(25, stats.inView);
+  const count50 = useCounter(50, stats.inView);
   const count2700 = useCounter(2700, stats.inView);
 
   const progressRef = useInView();
@@ -343,7 +344,8 @@ export default function Home() {
             <div ref={stats.ref} className="order-1 lg:order-2 grid grid-cols-2 gap-6">
               {[
                 { value: "2025", label: "Année de lancement", color: "primary", isStatic: true },
-                { value: count75, suffix: "", label: "Enfants accueillis", color: "secondary", isStatic: false },
+                { value: count25, suffix: "", label: "Places en accueil de jour", color: "secondary", isStatic: false },
+                { value: count50, suffix: "", label: "Places en internat", color: "secondary", isStatic: false },
                 { value: count2700, suffix: "m²", label: "Terrain à Apesito", color: "primary", isStatic: false },
                 { value: "∞", label: "Possibilités d'avenir", color: "secondary", isStatic: true },
               ].map((stat, i) => (
@@ -380,7 +382,7 @@ export default function Home() {
                 Un espace d'épanouissement complet
               </h3>
               <p className="text-muted-foreground">
-                Le centre proposera un accueil de jour et internat pour 75 enfants et adolescents en situation de précarité.
+                Le centre proposera un accueil de jour (25 places) et un internat (50 places), pour 75 enfants et adolescents en situation de précarité.
               </p>
               <div className="space-y-3">
                 {[
@@ -440,7 +442,8 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { emoji: "🌍", label: "Pays d'action", value: "France & Togo" },
-              { emoji: "👦", label: "Enfants bénéficiaires", value: "75" },
+              { emoji: "🌤️", label: "Places en accueil de jour", value: "25" },
+              { emoji: "🏠", label: "Places en internat", value: "50" },
               { emoji: "🏗️", label: "Terrain à Apesito", value: "2700m²" },
               { emoji: "💛", label: "Engagement bâtisseurs", value: "43€/mois" },
             ].map((item, i) => (

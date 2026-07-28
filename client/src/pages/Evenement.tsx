@@ -215,7 +215,7 @@ export default function Evenement() {
           <div className="grid grid-cols-3 gap-8 text-center">
             {[
               { number: "18 Avril", label: "Date du Gala" },
-              { number: "75", label: "Enfants bénéficiaires" },
+              { number: "75", label: "Enfants prévus en accueil" },
               { number: "2026", label: "Première édition" },
             ].map((stat, i) => (
               <div key={i}>
